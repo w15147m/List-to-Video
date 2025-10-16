@@ -13,7 +13,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 
     Route::get('playlist', function () {
-        return Inertia::render('Playlist/PlaylistPage');
+        return Inertia::render('video-admin/Playlist/PlaylistPage');
     })->name('playlist');
 });
 
