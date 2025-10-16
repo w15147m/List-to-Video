@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Playlist;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class PlaylistController extends Controller
 {
@@ -11,13 +12,13 @@ class PlaylistController extends Controller
      */
     public function index()
     {
-        $playlist = Playlist::orderby('created_at', 'DESC')->get();
-        return response()->json(
-            [
-                'status' => 200,
-                'data'   => $playlist,
-            ]
-        );
+        $playlists = Playlist::orderby('created_at', 'DESC')->get();
+
+        return Inertia::render('video-admin/Playlist/PlaylistPage', [
+            'playlists' => $playlists,
+            'status' => 200,
+        ]);
+
 
     }
 
