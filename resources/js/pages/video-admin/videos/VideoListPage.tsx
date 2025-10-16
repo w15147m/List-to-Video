@@ -78,7 +78,7 @@ export default function VideoListPage({ videos }: VideoListPageProps) {
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-neutral-200 bg-white dark:divide-neutral-700 dark:bg-neutral-900/50">
-                        {videos.map((video) => (
+                        {videos &&  videos.map((video) => (
                             <tr
                                 key={video.id}
                                 className="transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-800"
@@ -136,7 +136,7 @@ export default function VideoListPage({ videos }: VideoListPageProps) {
                                 </td>
                             </tr>
                         ))}
-                        {videos.length === 0 && (
+                        {videos && videos.length === 0 && (
                             <tr>
                                 <td colSpan={6} className="px-4 py-8 text-center text-sm text-neutral-500 dark:text-neutral-400">
                                     No videos found. Create a video to get started!

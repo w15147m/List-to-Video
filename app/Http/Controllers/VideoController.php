@@ -16,8 +16,8 @@ class VideoController extends Controller
     {
         // Eager load the playlist relationship to avoid N+1 problem
         $videos = Video::with('playlist')->orderby('created_at', 'DESC')->get();
-          return Inertia::render('video-admin/Playlist/PlaylistPage', [
-            'playlists' => $videos,
+          return Inertia::render('video-admin/videos/VideoListPage', [
+            'videos' => $videos,
             'status' => 200,
         ]);
     }
