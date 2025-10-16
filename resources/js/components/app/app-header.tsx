@@ -1,5 +1,4 @@
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs';
-import { Icon } from '@/components/ui/icon';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
@@ -7,6 +6,7 @@ import {
     DropdownMenuContent,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { Icon } from '@/components/ui/icon';
 import {
     NavigationMenu,
     NavigationMenuItem,
@@ -40,6 +40,11 @@ const mainNavItems: NavItem[] = [
     {
         title: 'Dashboard',
         href: dashboard(),
+        icon: LayoutGrid,
+    },
+    {
+        title: 'play-list',
+        href: '/playlist',
         icon: LayoutGrid,
     },
 ];
