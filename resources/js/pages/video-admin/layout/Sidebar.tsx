@@ -18,6 +18,10 @@ export default function Sidebar() {
             title: 'Video List', // Corrected title casing
             href: '/video',
         },
+          {
+            title: 'Video Item', // Corrected title casing
+            href: '/video-item',
+        },
 
     ];
 

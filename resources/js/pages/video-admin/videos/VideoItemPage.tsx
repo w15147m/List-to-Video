@@ -43,11 +43,7 @@ export default function VideoItemPage({ video, video_items }: VideoItemPageProps
     return (
         <CommonLayout breadcrumbs={breadcrumbs}>
             <Head title={`Items for: ${video.title}`} />
-
-            <h1 className="text-2xl font-bold mb-4">
-                Items for Video: <span className="text-primary">{video.title}</span>
-            </h1>
-
+       
             <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-neutral-200 dark:divide-neutral-700">
                     <thead className="bg-neutral-50 dark:bg-neutral-800/50">
@@ -70,7 +66,7 @@ export default function VideoItemPage({ video, video_items }: VideoItemPageProps
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-neutral-200 bg-white dark:divide-neutral-700 dark:bg-neutral-900/50">
-                        {video_items.map((item, index) => (
+                        {video_items && video_items.map((item, index) => (
                             <tr
                                 key={item.id}
                                 className="transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-800"

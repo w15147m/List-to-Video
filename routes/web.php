@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PlaylistController;
 use App\Http\Controllers\VideoController;
+use App\Http\Controllers\VideoItemController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -20,6 +21,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
      Route::resources([
         'play-list' => PlaylistController::class,
         'video'     => VideoController::class,
+        'video-item'=> VideoItemController::class,
     ]);
 });
 
