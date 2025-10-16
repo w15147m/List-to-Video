@@ -1,8 +1,6 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorePlaylistRequest;
-use App\Http\Requests\UpdatePlaylistRequest;
 use App\Models\Playlist;
 use Illuminate\Http\Request;
 
@@ -13,7 +11,14 @@ class PlaylistController extends Controller
      */
     public function index()
     {
-        //
+        $playlist = Playlist::orderby('created_at', 'DESC')->get();
+        return response()->json(
+            [
+                'status' => 200,
+                'data'   => $playlist,
+            ]
+        );
+
     }
 
     /**
