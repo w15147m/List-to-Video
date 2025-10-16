@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreVideoRequest;
 use App\Http\Requests\UpdateVideoRequest;
 use App\Models\Video;
+use Inertia\Inertia;
 
 class VideoController extends Controller
 {
@@ -15,12 +16,10 @@ class VideoController extends Controller
     {
         // Eager load the playlist relationship to avoid N+1 problem
         $videos = Video::with('playlist')->orderby('created_at', 'DESC')->get();
-        return response()->json(
-            [
-                'status' => 200,
-                'data'   => $videos,
-            ]
-        );
+          return Inertia::render('video-admin/Playlist/PlaylistPage', [
+            'playlists' => $videos,
+            'status' => 200,
+        ]);
     }
 
     /**

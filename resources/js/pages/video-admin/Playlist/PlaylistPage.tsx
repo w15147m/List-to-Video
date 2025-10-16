@@ -1,7 +1,7 @@
 import React from 'react';
 import { Head } from '@inertiajs/react';
 import { type BreadcrumbItem } from '@/types';
-import CommonLayout from './layout/commonLayout';
+import CommonLayout from '../layout/commonLayout';
 // Badge import removed
 import { Link } from '@inertiajs/react'; // For action buttons
 // Assuming you have a standard Button component (like from Shadcn/ui)
