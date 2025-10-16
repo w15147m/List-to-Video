@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\logIn;
 use App\Http\Controllers\PlaylistController;
+use App\Http\Controllers\VideoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -12,5 +13,6 @@ Route::post('/login', [logIn::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::resources([
         'play-list' => PlaylistController::class,
+        'video'     => VideoController::class,
     ]);
 });
