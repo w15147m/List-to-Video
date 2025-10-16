@@ -1,0 +1,89 @@
+
+@for $i from 1 through 100 {
+    @for $j from 1 through 100 {
+        .w-#{$i}-#{$j} {
+            width: #{$i}#{"%"} !important;
+        }
+    }
+    .w-vw-#{$i} {
+        width: #{$i}#{"vw"} !important;
+    }
+    .h-vh-#{$i} {
+        height: #{$i}#{"vh"} !important;
+    }
+    .min-w-vw-#{$i} {
+        width: #{$i}#{"vw"} !important;
+    }
+    .min-h-vh-#{$i} {
+        height: #{$i}#{"vh"} !important;
+    }
+    .max-w-vw-#{$i} {
+        width: #{$i}#{"vw"} !important;
+    }
+    .max-h-vh-#{$i} {
+        height: #{$i}#{"vh"} !important;
+    }
+    .min-h-#{$i} {
+        min-height: #{$i}#{"%"} !important;
+    }
+    .max-h-#{$i} {
+        max-height: #{$i}#{"%"} !important;
+    }
+    .min-w-#{$i} {
+        min-width: #{$i}#{"%"} !important;
+    }
+    .max-w-#{$i} {
+        max-width: #{$i}#{"%"} !important;
+    }
+    .br-#{$i} {
+        border-radius: #{$i}#{"px"} !important;
+    }
+    
+}
+@for $i from 1 through 200 {
+    .w-#{$i} {
+        width: #{$i}#{"%"} !important;
+    }
+}
+@for $i from 1 through 1600 {
+    .w-px-#{$i} {
+        width: #{$i}px !important;
+    }
+}
+
+
+@for $i from 1 through 600 {
+    .h-px-#{$i} {
+        height: #{$i}px !important;
+    }
+     .h-p#{$i} {
+        height: #{$i}#{"px"} !important;
+    }
+     .h-rem-#{$i} {
+        height: #{$i}rem !important;
+    }
+      .w-rem-#{$i} {
+        width: #{$i}rem !important;
+    }
+}
+
+
+@for $i from 1 through 1200 {
+    .max-w-px-#{$i} {
+      max-width: #{$i}#{"px"} !important;
+    }
+    .min-w-px-#{$i} {
+      min-width: #{$i}#{"px"} !important;
+    }
+      .max-h-px-#{$i} {
+      max-height: #{$i}#{"px"} !important;
+    }
+    .min-h-px-#{$i} {
+      min-height: #{$i}#{"px"} !important;
+    }
+  }
+
+
+
+
+  

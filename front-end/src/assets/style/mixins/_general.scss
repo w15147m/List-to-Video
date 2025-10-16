@@ -1,0 +1,502 @@
+$flexProperties: (
+    jc: (
+        center: center,
+        start: flex-start,
+        end: flex-end,
+        between: space-between,
+        around: space-around,
+        evenly: space-evenly,
+    ),
+    ai: (
+        center: center,
+        start: flex-start,
+        end: flex-end,
+        baseline: baseline,
+        stretch: stretch,
+    ),
+);
+
+
+
+@each $color, $value in $custom-colors {
+  .bg-#{$color} {
+      background-color: $value !important;
+  }
+  @for $i from 0 through 10 {
+  .bd-#{$i}-#{$color} {
+        border: #{$i}#{"px solid "}#{$value} !important;
+    }
+  }
+}
+
+// Generate classes for each justify-content and align-items value
+@each $property, $map in $flexProperties {
+    $propertyName: if($property == "jc", "justify-content", "align-items");
+    @each $class, $value in $map {
+        .#{$property}-#{$class} {
+            #{$propertyName}: $value !important;
+        }
+    }
+}
+@for $i from 1 through 1000 {
+    .zi-#{$i} {
+        z-index: #{$i} !important;
+    }
+}
+@for $i from 3 through 105 {
+    .font-#{$i} {
+        font-size: #{$i}#{"px"} !important;
+    }
+}
+@for $i from 1 through 1500 {
+    .fw-#{$i} {
+        font-weight: #{$i}#{"00"} !important;
+    }
+
+}
+
+@for $i from 1 through 12 {
+    .f-grow-#{$i} {
+        flex-grow: #{$i} !important;
+    }
+
+}
+
+@for $i from 1 through 10 {
+    @for $j from 1 through 10 {
+        .od-#{$i}-#{$j} {
+            order: #{$j} !important;
+        }
+
+    }
+}
+@for $i from 0 through 10 {
+    .bd-#{$i} {
+        border: #{$i}#{"px solid"} !important;
+    }
+    .bd-#{$i}-cc {
+        border: #{$i}#{"px solid #ccc"} !important;
+    }
+    .bd-b-#{$i} {
+        border-bottom: #{$i}#{"px solid"} !important;
+    }
+    .bd-t-#{$i} {
+        border-top: #{$i}#{"px solid"} !important;
+    }
+    .bd-l-#{$i} {
+        border-left: #{$i}#{"px solid"} !important;
+    }
+    .bd-r-#{$i} {
+        border-right: #{$i}#{"px solid"} !important;
+    }
+
+    .pd-#{$i} {
+        padding: #{$i}#{"%"} !important;
+    }
+    .pd-b-#{$i} {
+        padding-bottom: #{$i}#{"%"} !important;
+    }
+    .pd-t-#{$i} {
+        padding-top: #{$i}#{"%"} !important;
+    }
+    .pd-l-#{$i} {
+        padding-left: #{$i}#{"%"} !important;
+    }
+    .pd-r-#{$i} {
+        padding-right: #{$i}#{"%"} !important;
+    }
+}
+@for $i from 1 through 100 {
+    .pd-px-#{$i} {
+        padding: #{$i}px !important;
+    }
+    .pd-t-px-#{$i} {
+        padding-top: #{$i}px !important;
+    }
+    .pd-b-px-#{$i} {
+        padding-bottom: #{$i}px !important;
+    }
+    .pd-l-px-#{$i} {
+        padding-left: #{$i}px !important;
+    }
+    .pd-r-px-#{$i} {
+        padding-right: #{$i}px !important;
+    }
+    .pd-x-px-#{$i} {
+        padding-left: #{$i}px !important;
+        padding-right: #{$i}px !important;
+    }
+    .pd-y-px-#{$i} {
+        padding-top: #{$i}px !important;
+        padding-bottom: #{$i}px !important;
+    }
+}
+@for $i from 1 through 100 {
+    .m-px-#{$i} {
+        margin: #{$i}px !important;
+    }
+    .m-t-px-#{$i} {
+        margin-top: #{$i}px !important;
+    }
+    .m-b-px-#{$i} {
+        margin-bottom: #{$i}px !important;
+    }
+    .m-l-px-#{$i} {
+        margin-left: #{$i}px !important;
+    }
+    .m-l-px--#{$i} {
+        margin: -#{$i}px !important;
+      }
+    .m-r-px-#{$i} {
+        margin-right: #{$i}px !important;
+    }
+    .m-x-px-#{$i} {
+        margin-left: #{$i}px !important;
+        margin-right: #{$i}px !important;
+    }
+    .m-y-px-#{$i} {
+        margin-top: #{$i}px !important;
+        margin-bottom: #{$i}px !important;
+    }
+}
+@for $i from -50 through 100 {
+    .cml-#{$i} {
+        margin-left: #{$i}#{"%"} !important;
+    }
+    .cmr-#{$i} {
+        margin-right: #{$i}#{"%"} !important;
+    }
+    .cmb-#{$i} {
+        margin-bottom: #{$i}#{"%"} !important;
+    }
+    .cmt-#{$i} {
+        margin-top: #{$i}#{"%"} !important;
+    }
+}
+@for $i from 0 through 100 {
+    .ml-#{$i}-0 {
+        margin-left: #{$i}#{"%"} !important;
+    }
+    .mr-#{$i}-0 {
+        margin-right: #{$i}#{"%"} !important;
+    }
+}
+$cursors: (
+    pointer: pointer,
+    default: default,
+    none: none,
+    not-allowed: not-allowed,
+    text: text,
+    wait: wait,
+    help: help,
+    crosshair: crosshair,
+    move: move,
+    vertical-text: vertical-text,
+    alias: alias,
+    copy: copy,
+    no-drop: no-drop,
+    all-scroll: all-scroll
+) !default;
+@each $key, $value in $cursors {
+
+    .cursor-#{$key} {
+        pointer-events: all !important;
+        cursor: #{$value} !important;
+    }
+}
+
+
+@media screen and (max-width: 480px) {
+    @for $i from 0 through 100 {
+        .ml-#{$i}-0 {
+            margin-left: 0% !important;
+        }
+        .mr-#{$i}-0 {
+            margin-right: 0% !important;
+        }
+    }
+    @for $i from 1 through 100 {
+        @for $j from 1 through 100 {
+            .w-#{$i}-#{$j} {
+                width: #{$j}#{"%"} !important;
+            }
+        }
+    }
+    @for $i from 1 through 10 {
+        @for $j from 1 through 10 {
+            .od-#{$i}-#{$j} {
+                order: #{$j} !important;
+            }
+
+        }
+    }
+
+    $mobileFlexProperties: (
+    m-jc: (
+        center: center,
+        start: flex-start,
+        end: flex-end,
+        between: space-between,
+        around: space-around,
+        evenly: space-evenly,
+    ),
+    m-ai: (
+        center: center,
+        start: flex-start,
+        end: flex-end,
+        baseline: baseline,
+        stretch: stretch,
+    ),
+);
+@each $property, $map in $mobileFlexProperties {
+    $propertyName: if($property == "m-jc", "justify-content", "align-items");
+    @each $class, $value in $map {
+        .#{$property}-#{$class} {
+            #{$propertyName}: $value !important;
+        }
+    }
+}
+$bg-pt: (top, center, bottom, left, right);
+
+@each $position in $bg-pt {
+    .bg-pos-#{$position} {
+        background-position: $position !important;
+    }
+}
+
+$bg-sz: (cover, contain, auto);
+
+@each $size in $bg-sz {
+    .bg-size-#{$size} {
+        background-size: $size !important;
+    }
+}
+
+}
+.tox-promotion{
+    display: none;
+  }
+.tox-tbtn--disabled{
+    display: none;
+  }
+
+  .tox .tox-statusbar__text-container .tox-statusbar__path-item {
+    display: none;
+  }
+  .tox .tox-statusbar__text-container .tox-statusbar__wordcount{
+    display: none;
+  }
+  .tox .tox-statusbar__text-container .tox-statusbar__branding{
+    display: none;
+  }
+  .tox .tox-statusbar{
+    border-top: 1px solid #ffffff;
+  }
+  .p-holder::placeholder {
+  font-weight: 600;
+}
+
+// Generate position type classes
+// Define position types
+$positions: (
+  relative,
+  absolute,
+  fixed,
+  sticky,
+  static
+);
+
+// Generate position type classes
+@each $pos in $positions {
+  .pos-#{$pos} {
+    position: $pos !important;
+  }
+}
+
+// Generate top, bottom, left, and right classes with px-based values
+@for $i from -500 through 500 {
+  .top-px-#{$i} {
+    top: #{$i}px !important;
+  }
+  .bottom-px-#{$i} {
+    bottom: #{$i}px !important;
+  }
+  .left-px-#{$i} {
+    left: #{$i}px !important;
+  }
+  .right-px-#{$i} {
+    right: #{$i}px !important;
+  }
+}
+
+
+
+// Generate transform translate classes
+@for $i from -100 through 100 {
+  .translate-x-px-#{$i} {
+    transform: translateX(#{$i}px) !important;
+  }
+  .translate-y-px-#{$i} {
+    transform: translateY(#{$i}px) !important;
+  }
+}
+
+// Generate z-index classes
+@for $i from 0 through 1000 {
+  .z-#{$i} {
+    z-index: #{$i} !important;
+  }
+}
+
+
+@mixin dynamic-width-ch($start, $end) {
+    @for $i from $start through $end {
+      .w-#{$i}ch {
+        max-width: #{$i}ch;
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  // Generate classes for character widths from 1ch to 50ch
+  @include dynamic-width-ch(1, 50);
+
+// Define breakpoints
+$breakpoints: (
+  sm: 640px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1200px,
+  xl-md: 1300px,
+  xxl: 1400px,
+  xxl-md: 1500px,
+  xxxl: 1600px,
+  xxxxl: 1800px
+);
+
+// Apply breakpoints to existing classes
+@each $breakpoint, $size in $breakpoints {
+  @media (min-width: #{$size}) {
+    @for $i from 1 through 1200 {
+        @if $i <= 100 {
+          .#{$breakpoint}\:w-#{$i} {
+            width: #{$i}#{"%"} !important;
+          }
+        }
+        .#{$breakpoint}\:w-px-#{$i} {
+          width: #{$i}px !important;
+        }
+        .#{$breakpoint}\:w-rem-#{$i} {
+          width: #{$i}rem !important;
+        }
+        .#{$breakpoint}\:h-px-#{$i} {
+          height: #{$i}px !important;
+        }
+      }
+
+    // Flex Utilities
+    @each $breakpoint, $size in $breakpoints {
+        @media (min-width: #{$size}) {
+            @each $property, $map in $flexProperties {
+                $propertyName: if($property == "jc", "justify-content", "align-items");
+                @each $class, $value in $map {
+                    .#{$breakpoint}\:#{$property}-#{$class} {
+                        #{$propertyName}: $value !important;
+                    }
+                }
+            }
+        }
+    }
+  }
+}
+
+
+
+// Import Bootstrap functions first
+@import "bootstrap/scss/functions";
+
+// Override Bootstrap default grid breakpoints
+// 2️⃣ Custom Breakpoints
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  lg-md: 1050px,
+  xl: 1200px,
+  xl-md: 1300px,
+  xxl: 1400px,
+  xxl-md: 1500px,
+  xxxl: 1600px,
+  xxxxl: 1800px
+);
+
+// 3️⃣ Custom Container Widths
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  lg-md: 1000px,    // Max width for lg-md
+  xl: 1140px,
+  xl-md: 1250px,    // Max width for xl-md
+  xxl: 1320px,
+  xxl-md: 1450px,   // Max width for xxl-md
+  xxxl: 1500px,     // Max width for xxxl
+  xxxxl: 1700px     // Max width for xxxxl
+);
+// Import the rest of Bootstrap
+@import "bootstrap/scss/bootstrap";
+
+// Custom styles for xxxl breakpoint
+@media (min-width: 1800px) {
+  .container-xxxl {
+    max-width: 1600px;
+  }
+
+  .col-xxxl-4 {
+    flex: 0 0 auto;
+    width: 33.3333%; // 4 out of 12 columns
+  }
+
+  .col-xxxl-6 {
+    flex: 0 0 auto;
+    width: 50%; // 6 out of 12 columns
+  }
+}
+
+
+@for $i from 1 through 10 {
+    .fw-#{$i} {
+        font-weight: #{$i}#{"00"} !important;
+    }
+    .trunc-#{$i}{
+        display: -webkit-box;
+        -webkit-line-clamp: #{$i};
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .ps-px-#{$i}{
+        padding-left: #{$i}px !important;
+    }
+    .pe-px-#{$i}{
+        padding-right: #{$i}px !important;
+    }
+    .py-px-#{$i}{
+        padding-top: #{$i}px !important;
+        padding-bottom: #{$i}px !important;
+    }
+    .pt-px-#{$i}{
+        padding-top: #{$i}px !important;
+    }
+    .pb-px-#{$i}{
+        padding-bottom: #{$i}px !important;
+    }
+    .px-px-#{$i}{
+        padding-left: #{$i}px !important;
+        padding-right: #{$i}px !important;
+    }
+}

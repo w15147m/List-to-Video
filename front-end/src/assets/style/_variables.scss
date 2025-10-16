@@ -1,0 +1,130 @@
+// =================================================================
+// VARIABLES
+// =================================================================
+
+// Import Google Font
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+
+// =================================================================
+// TYPOGRAPHY
+// =================================================================
+$primary-font: "DM Sans", sans-serif;
+
+// =================================================================
+// COLOR PALETTE
+// =================================================================
+$primary-white: #FFF;
+$primary-color: #43c3D1;
+$primary-black: #061123;
+$secondary-color: #0284FF;
+$tertiary-color: #2F4858;
+
+// Legacy support
+$lighter: #f8f9fa !default;
+
+// Custom Brand Colors (Bootstrap-conflict-free naming)
+$brand-colors: (
+    "brand-primary": $primary-color,      // #43c3D1
+    "brand-secondary": $secondary-color,  // #0284FF
+    "brand-tertiary": $tertiary-color,    // #2F4858
+    "brand-white": $primary-white,        // #FFF
+    "brand-black": $primary-black,        // #061123
+    "brand-light": #f8f9fa,
+    "brand-lighter": $lighter,
+    "brand-clight": #d5d5d5,
+) !default;
+
+// Use brand colors for utilities
+$custom-colors: $brand-colors;
+
+// =================================================================
+// FLEX PROPERTIES
+// =================================================================
+
+// Flex Properties Map
+$flexProperties: (
+    jc: (
+        center: center,
+        start: flex-start,
+        end: flex-end,
+        between: space-between,
+        around: space-around,
+        evenly: space-evenly,
+    ),
+    ai: (
+        center: center,
+        start: flex-start,
+        end: flex-end,
+        baseline: baseline,
+        stretch: stretch,
+    ),
+);
+
+// Mobile Flex Properties Map
+$mobileFlexProperties: (
+    m-jc: (
+        center: center,
+        start: flex-start,
+        end: flex-end,
+        between: space-between,
+        around: space-around,
+        evenly: space-evenly,
+    ),
+    m-ai: (
+        center: center,
+        start: flex-start,
+        end: flex-end,
+        baseline: baseline,
+        stretch: stretch,
+    ),
+);
+
+// =================================================================
+// OTHER UTILITIES
+// =================================================================
+
+// Cursor Types
+$cursors: (
+    pointer: pointer,
+    default: default,
+    none: none,
+    not-allowed: not-allowed,
+    text: text,
+    wait: wait,
+    help: help,
+    crosshair: crosshair,
+    move: move,
+    vertical-text: vertical-text,
+    alias: alias,
+    copy: copy,
+    no-drop: no-drop,
+    all-scroll: all-scroll
+) !default;
+
+// Background Position Values
+$bg-pt: (top, center, bottom, left, right);
+
+// Background Size Values
+$bg-sz: (cover, contain, auto);
+
+// Position Types
+$positions: (
+  relative,
+  absolute,
+  fixed,
+  sticky,
+  static
+);
+
+// Custom Breakpoints
+$breakpoints: (
+  sm: 640px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1200px,
+  xl-md: 1300px,
+  xxl: 1400px,
+  xxl-md: 1500px,
+  xxxl: 1600px,
+  xxxxl: 1800px
+);

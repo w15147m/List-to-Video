@@ -1,0 +1,16 @@
+// =================================================================
+// MIXINS
+// =================================================================
+
+// Dynamic Width Character Mixin
+@mixin dynamic-width-ch($start, $end) {
+    @for $i from $start through $end {
+      .w-#{$i}ch {
+        max-width: #{$i}ch;
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+}

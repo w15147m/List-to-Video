@@ -1,0 +1,12 @@
+$base-color: rgb(101, 113, 255);
+
+@for $i from 1 through 10 {
+    $lightness: (10 - $i) * 3%; 
+
+    .highlight-date.o#{$i} {
+        background-color: lighten($base-color, $lightness) !important;
+        color: if($i <= 7, black, white) !important;
+    }
+}
+
+
