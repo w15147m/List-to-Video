@@ -13,14 +13,8 @@ return new class extends Migration
     {
         Schema::create('playlists', function (Blueprint $table) {
             $table->id();
-
-            // Core Playlist Data
             $table->string('name')->comment('The name of the playlist/series.');
             $table->text('description')->nullable();
-
-            // Optional: Foreign key to a user if playlists are user-specific
-            // $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
-
             $table->timestamps();
         });
     }
