@@ -24,27 +24,16 @@ const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Video Admin', href: '/video-admin' },
     { title: 'Playlists', href: '/playlist' },
 ];
-
+const pageInfo = {
+    title: ' Playlist Management ',
+    btnText: 'Create',
+    url: '/playlist/create',
+}
 export default function PlaylistPage({ playlists }: PlaylistPageProps) {
     return (
-        <CommonLayout breadcrumbs={breadcrumbs}>
+        <CommonLayout breadcrumbs={breadcrumbs} pageInfo={pageInfo}>
             <Head title="Playlists" />
-
-            {/* NEW: Container for the Header and the Table */}
-            <div className="">
-                <div className="flex justify-between p-5">
-                    <h3 className="mb-2 text-lg font-bold text-neutral-900 dark:text-neutral-100">
-                        Playlist Management
-                    </h3>
-                    <Button asChild>
-                        <Link href="/playlist/create">
-                            <Plus className="size-4" />
-                            Create
-                        </Link>
-                    </Button>
-                </div>
-
-                {/* Existing Table Structure */}
+            <div className="pt-2">
                 <div className="overflow-x-auto">
                     <table className="min-w-full divide-y divide-neutral-200 dark:divide-neutral-700">
                         <thead className="bg-neutral-50 dark:bg-neutral-800/50">

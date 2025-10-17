@@ -1,22 +1,46 @@
+import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import AppLayout from '@/layouts/app-layout';
-import { Head } from '@inertiajs/react';
-import Sidebar from './Sidebar';
 import { BreadcrumbItem } from '@/types';
-
+import { Link } from '@inertiajs/react';
+import { Plus } from 'lucide-react';
+import Sidebar from './Sidebar';
 interface Props {
- breadcrumbs?: BreadcrumbItem[];
+    breadcrumbs?: BreadcrumbItem[];
     children: React.ReactNode;
+    pageInfo?: {
+        title: string | null;
+        btnText?: string | null;
+        url: string | null;
+    };
 }
-export default function CommonLayout({ children, breadcrumbs }: Props) {
+export default function CommonLayout({
+    children,
+    breadcrumbs,
+    pageInfo,
+}: Props) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Orders" />
             <div className="mx-auto flex w-full max-w-7xl gap-6 p-4">
                 <Sidebar />
                 <div className="min-w-0 flex-1">
                     <Card className="overflow-hidden p-0 shadow-lg">
-                        <div className="overflow-x-auto">{children}</div>
+                        <div className="overflow-x-auto border-b border-neutral-200 dark:border-neutral-700">
+                            <div className="flex justify-between px-5 pt-5">
+                                <h3 className=" text-lg font-bold text-neutral-900 dark:text-neutral-100">
+                                    {pageInfo?.title}
+                                </h3>
+                                {pageInfo?.btnText && (
+                                    <Button asChild>
+                                        <Link href={pageInfo?.url || '#'}>
+                                            <Plus className="size-4" />
+                                            {pageInfo?.btnText}
+                                        </Link>
+                                    </Button>
+                                )}
+                            </div>
+                            {children}
+                        </div>
                     </Card>
                 </div>
             </div>

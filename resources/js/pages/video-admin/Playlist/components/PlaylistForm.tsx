@@ -35,7 +35,7 @@ export default function PlaylistForm({ playlist, submitRoute }: PlaylistFormProp
     };
 
     return (
-        <div className="p-6">
+        <div className="p-6 pt-0">
             <form onSubmit={submit} className="space-y-6">
                 <div>
                     <Label htmlFor="name">Playlist Name</Label>

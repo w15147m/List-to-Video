@@ -46,9 +46,18 @@ const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Video List', href: '/video' },
 ];
 
+// 🆕 ADDED PAGE INFO
+const pageInfo = {
+    title: 'Video Management', // The h3 in CommonLayout will use this
+    btnText: 'Create Video',   // The button text
+    url: '/video/create',      // The button link
+};
+// --------------------
+
 export default function VideoListPage({ videos }: VideoListPageProps) {
     return (
-        <CommonLayout breadcrumbs={breadcrumbs}>
+        // 🆕 PASS PAGE INFO
+        <CommonLayout breadcrumbs={breadcrumbs} pageInfo={pageInfo}>
             <Head title="Video List" />
 
             <div className="overflow-x-auto">
