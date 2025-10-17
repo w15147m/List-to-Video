@@ -1,10 +1,10 @@
-import React from 'react';
-import { Head } from '@inertiajs/react';
-import { type BreadcrumbItem } from '@/types';
-import CommonLayout from '../layout/commonLayout';
-import { Link } from '@inertiajs/react'; // For action buttons and the new create button
 import { Button } from '@/components/ui/button';
-import { Pencil, Trash2, Plus } from 'lucide-react'; // Import Plus icon
+import { type BreadcrumbItem } from '@/types';
+import { Head, Link } from '@inertiajs/react';
+import { Plus } from 'lucide-react'; // Import Plus icon
+import DeleteButton from '../components/DeleteButton';
+import EditButton from '../components/EditButton';
+import CommonLayout from '../layout/commonLayout';
 
 // --- 1. Define Props Interface (Remains the same) ---
 
@@ -33,14 +33,13 @@ export default function PlaylistPage({ playlists }: PlaylistPageProps) {
             {/* NEW: Container for the Header and the Table */}
             <div className="">
                 <div className="flex justify-between p-5">
-                  <h3 className="mb-2 text-lg font-bold text-neutral-900 dark:text-neutral-100">
-                    Playlist Management
-                </h3>
+                    <h3 className="mb-2 text-lg font-bold text-neutral-900 dark:text-neutral-100">
+                        Playlist Management
+                    </h3>
                     <Button asChild>
-                        {/* Assuming your create route is '/playlist/create' */}
                         <Link href="/playlist/create">
-                            <Plus className="mr-2 size-4" />
-                            Create New Playlist
+                            <Plus className="size-4" />
+                            Create
                         </Link>
                     </Button>
                 </div>
@@ -76,39 +75,32 @@ export default function PlaylistPage({ playlists }: PlaylistPageProps) {
                                     <td className="px-4 py-4 text-sm font-medium text-neutral-900 dark:text-neutral-100">
                                         {playlist.name}
                                     </td>
-                                    <td className="px-4 py-4 text-sm text-neutral-500 dark:text-neutral-400 max-w-sm truncate">
-                                        {playlist.description || 'No description provided.'}
+                                    <td className="max-w-sm truncate px-4 py-4 text-sm text-neutral-500 dark:text-neutral-400">
+                                        {playlist.description ||
+                                            'No description provided.'}
                                     </td>
 
                                     {/* Actions Cell with Icon Buttons */}
-                                    <td className="px-4 py-4 text-center whitespace-nowrap space-x-2">
+                                    <td className="space-x-2 px-4 py-4 text-center whitespace-nowrap">
                                         {/* Edit Button */}
-                                        <Button
-                                            asChild
-                                            variant="outline"
-                                            size="icon"
-                                            title={`Edit ${playlist.name}`}
-                                        >
-                                            <Link href={`/playlist/${playlist.id}/edit`}>
-                                                <Pencil className="size-4" />
-                                            </Link>
-                                        </Button>
-
+                                        <EditButton
+                                            route={`/playlist/${playlist.id}/edit`}
+                                        ></EditButton>
                                         {/* Delete Button */}
-                                        <Button
-                                            variant="destructive"
-                                            size="icon"
-                                            title={`Delete ${playlist.name}`}
-                                        >
-                                            <Trash2 className="size-4" />
-                                        </Button>
+                                        <DeleteButton
+                                            route={`Delete ${playlist.name}`}
+                                        ></DeleteButton>
                                     </td>
                                 </tr>
                             ))}
                             {playlists.length === 0 && (
                                 <tr>
-                                    <td colSpan={4} className="px-4 py-8 text-center text-sm text-neutral-500 dark:text-neutral-400">
-                                        No playlists found. Start by creating a new one!
+                                    <td
+                                        colSpan={4}
+                                        className="px-4 py-8 text-center text-sm text-neutral-500 dark:text-neutral-400"
+                                    >
+                                        No playlists found. Start by creating a
+                                        new one!
                                     </td>
                                 </tr>
                             )}
