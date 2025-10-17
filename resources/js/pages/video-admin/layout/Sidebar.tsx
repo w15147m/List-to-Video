@@ -2,7 +2,6 @@
 
 import { Card } from '@/components/ui/card';
 import { NavItem } from '@/types';
-// Import usePage for accessing the current URL
 import { Link, usePage } from '@inertiajs/react';
 
 export default function Sidebar() {
@@ -12,7 +11,7 @@ export default function Sidebar() {
     const mainNavItems: NavItem[] = [
         {
             title: 'Playlist', // Corrected title casing for better UI
-            href: '/play-list', // Use the clean path for comparison
+            href: '/playlist', // Use the clean path for comparison
         },
         {
             title: 'Video List', // Corrected title casing

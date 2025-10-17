@@ -43,7 +43,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Video Admin',
-        href: '/play-list',
+        href: '/playlist',
     },
 ];
 

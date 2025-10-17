@@ -22,6 +22,11 @@ class PlaylistController extends Controller
 
     }
 
+    public function create()
+    {
+        info('create playlist called');
+        return Inertia::render('video-admin/Playlist/PlaylistCreate');
+    }
     /**
      * Store a newly created resource in storage.
      */

@@ -12,7 +12,10 @@ Route::get('/user', function (Request $request) {
 Route::post('/login', [logIn::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::resources([
-        'play-list' => PlaylistController::class,
+        'playlist' => PlaylistController::class,
         'video'     => VideoController::class,
     ]);
 });
+
+
+
