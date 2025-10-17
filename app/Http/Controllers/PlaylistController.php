@@ -27,33 +27,21 @@ class PlaylistController extends Controller
         info('create playlist called');
         return Inertia::render('video-admin/Playlist/PlaylistCreate');
     }
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name'        => 'required|unique:playlists,name',
-            'description' => 'nullable|string', // Assuming description is optional
+        $validated = $request->validate([
+            // Enforce required and max length here
+            'name' => 'required|string|max:255|unique:playlists,name',
+            'description' => 'nullable|string|max:500', // Example max length
         ]);
 
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => 'validation failed',
-                'errors'  => $validator->errors(),
-            ], 422);
-        }
+        Playlist::create($validated);
 
-        $playlist              = new Playlist();
-        $playlist->name        = $request->name;
-        $playlist->description = $request->description;
-        $playlist->save();
-        return response()->json([
-            'message' => 'Playlist created',
-            "data"    => $playlist,
-        ], 200);
-
+        // This redirect automatically carries success/error messages back to the Inertia page
+        return redirect()->route('playlist.index')
+                         ->with('success', 'Playlist created successfully!');
     }
+
 
     /**
      * Display the specified resource.
@@ -83,41 +71,18 @@ class PlaylistController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update($id, Request $request)
+    public function update(Request $request, Playlist $playlist)
     {
-        // Using find() is cleaner for primary key lookups
-        $playlist = Playlist::find($id);
-
-        if ($playlist == null) {
-            return response()->json(
-                [
-                    'status'  => 404,
-                    'message' => 'Data not found',
-                    'data'    => [],
-                ]
-            );
-        }
-
-        // Validation: required name, and unique name ignoring the current playlist's ID
-        $validator = Validator::make($request->all(), [
-            'name'        => 'required|unique:playlists,name,' . $id,
-            'description' => 'nullable|string',
+        $validated = $request->validate([
+            // Note: The unique rule excludes the current playlist ID
+            'name' => 'required|string|max:255|unique:playlists,name,' . $playlist->id,
+            'description' => 'nullable|string|max:500',
         ]);
 
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => 'validation failed',
-                'errors'  => $validator->errors(),
-            ], 422);
-        }
+        $playlist->update($validated);
 
-        $playlist->name        = $request->name;
-        $playlist->description = $request->description;
-        $playlist->save();
-        return response()->json([
-            "message" => "Playlist updated successfully",
-            "data"    => $playlist,
-        ], 200);
+        return redirect()->route('playlist.index')
+                         ->with('success', 'Playlist updated successfully!');
     }
     /**
      * Remove the specified resource from storage.

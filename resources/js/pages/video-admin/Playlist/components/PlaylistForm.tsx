@@ -5,6 +5,7 @@ import { Card } from '@/components/ui/card'; // Assuming you have a Card compone
 import { Input } from '@/components/ui/input'; // Assuming you have an Input component
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { log } from 'console';
 declare function route(name: string, parameters?: any): string;
 interface FormData {
     name: string;
@@ -27,14 +28,18 @@ export default function PlaylistForm({ playlist, submitRoute }: PlaylistFormProp
         e.preventDefault();
         const routeParams = isEditing ? { playlist: playlist.id } : {};
         if (isEditing) {
-            put(route(submitRoute, routeParams));
+
+            // put(route(submitRoute, routeParams));
         } else {
+              console.log('====================================');
+            console.log(route(submitRoute));
+            console.log('====================================');
             post(route(submitRoute));
         }
     };
 
     return (
-        <Card className="p-6">
+        <div className="p-6">
             <form onSubmit={submit} className="space-y-6">
                 <div>
                     <Label htmlFor="name">Playlist Name</Label>
@@ -67,6 +72,6 @@ export default function PlaylistForm({ playlist, submitRoute }: PlaylistFormProp
                     </Button>
                 </div>
             </form>
-        </Card>
+        </div>
     );
 }
