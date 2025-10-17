@@ -9,8 +9,18 @@ class Video extends Model
 {
     /** @use HasFactory<\Database\Factories\VideoFactory> */
     use HasFactory;
+        protected $fillable = [
+        'title',
+        'template_name',
+        'type',
+        'playlist_id',
+        'status',
+        'output_path',
+    ];
      public function playlist()
     {
+
         return $this->belongsTo(Playlist::class);
+
     }
 }

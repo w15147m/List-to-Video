@@ -4,27 +4,19 @@ import { Head, Link } from '@inertiajs/react';
 import { Pencil, Plus, Trash2, Video } from 'lucide-react';
 import CommonLayout from '../layout/commonLayout';
 
-// --- 1. Define Props Interface ---
-
-// Interface for a single video item (matching your migration)
 interface VideoItem {
     id: number;
     title: string;
     template_name: string;
     type: 'short' | 'full';
     status: 'pending' | 'processing' | 'completed' | 'failed';
-    // Optionally include the playlist name if you eager-load it in Laravel
     playlist_name: string | null;
 }
 
-// Interface for the component's props (data sent from Laravel)
 interface VideoListPageProps {
     videos: VideoItem[];
 }
 
-// --- 2. Helper Functions (Optional for Status Badges) ---
-
-// Helper function to map video status to a color/style (if you bring back Badges)
 const getStatusClasses = (status: VideoItem['status']) => {
     switch (status) {
         case 'completed':
@@ -48,15 +40,14 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 // 🆕 ADDED PAGE INFO
 const pageInfo = {
-    title: 'Video Management', // The h3 in CommonLayout will use this
-    btnText: 'Create Video',   // The button text
-    url: '/video/create',      // The button link
+    title: 'Video Management',
+    btnText: 'Create Video',
+    url: '/video/create',
 };
 // --------------------
 
 export default function VideoListPage({ videos }: VideoListPageProps) {
     return (
-        // 🆕 PASS PAGE INFO
         <CommonLayout breadcrumbs={breadcrumbs} pageInfo={pageInfo}>
             <Head title="Video List" />
 
