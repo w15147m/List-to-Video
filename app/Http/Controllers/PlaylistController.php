@@ -16,22 +16,20 @@ class PlaylistController extends Controller
 
         return Inertia::render('video-admin/Playlist/PlaylistPage', [
             'playlists' => $playlists,
-            'status' => 200,
+            'status'    => 200,
         ]);
-
 
     }
 
     public function create()
     {
-        info('create playlist called');
         return Inertia::render('video-admin/Playlist/PlaylistCreate');
     }
-public function store(Request $request)
+    public function store(Request $request)
     {
         $validated = $request->validate([
             // Enforce required and max length here
-            'name' => 'required|string|max:255|unique:playlists,name',
+            'name'        => 'required|string|max:255|unique:playlists,name',
             'description' => 'nullable|string|max:500', // Example max length
         ]);
 
@@ -39,9 +37,8 @@ public function store(Request $request)
 
         // This redirect automatically carries success/error messages back to the Inertia page
         return redirect()->route('playlist.index')
-                         ->with('success', 'Playlist created successfully!');
+            ->with('success', 'Playlist created successfully!');
     }
-
 
     /**
      * Display the specified resource.
@@ -71,18 +68,28 @@ public function store(Request $request)
     /**
      * Update the specified resource in storage.
      */
+
+    public function edit(Playlist $playlist)
+    {
+        return Inertia::render('video-admin/Playlist/PlaylistEdit', [
+            'playlist' => $playlist,
+            'status'    => 200,
+        ]);
+
+    }
+
     public function update(Request $request, Playlist $playlist)
     {
         $validated = $request->validate([
             // Note: The unique rule excludes the current playlist ID
-            'name' => 'required|string|max:255|unique:playlists,name,' . $playlist->id,
+            'name'        => 'required|string|max:255|unique:playlists,name,' . $playlist->id,
             'description' => 'nullable|string|max:500',
         ]);
 
         $playlist->update($validated);
 
         return redirect()->route('playlist.index')
-                         ->with('success', 'Playlist updated successfully!');
+            ->with('success', 'Playlist updated successfully!');
     }
     /**
      * Remove the specified resource from storage.

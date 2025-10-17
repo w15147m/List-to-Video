@@ -28,12 +28,8 @@ export default function PlaylistForm({ playlist, submitRoute }: PlaylistFormProp
         e.preventDefault();
         const routeParams = isEditing ? { playlist: playlist.id } : {};
         if (isEditing) {
-
-            // put(route(submitRoute, routeParams));
+            put(route(submitRoute, routeParams));
         } else {
-              console.log('====================================');
-            console.log(route(submitRoute));
-            console.log('====================================');
             post(route(submitRoute));
         }
     };
