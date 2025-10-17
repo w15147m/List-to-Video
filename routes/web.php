@@ -21,7 +21,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
      Route::resources([
         'playlist' => PlaylistController::class,
         'video'     => VideoController::class,
-        'video-item'=> VideoItemController::class,
+        'videoItem'=> VideoItemController::class,
     ]);
 });
 
@@ -40,16 +40,17 @@ require __DIR__ . '/auth.php';
 //   GET|HEAD        playlist/{play_list}/edit ...*............ playlist.edit › PlaylistController@edit
 //   G  GET|HEAD     video ........................*................. video.index › VideoController@index
 //   POST            video ........................*................. video.store › VideoController@store
-//   GET|HEAD        video-item ...................*........ video-item.index › VideoItemController@index
-//   POST            video-item ...................*........ video-item.store › VideoItemController@store
-//   GET|HEAD        video-item/create ............*...... video-item.create › VideoItemController@create
-//   GET|HEAD        video-item/{video_item} ......*.......... video-item.show › VideoItemController@show
-//   PUT|PATCH       video-item/{video_item} ......*...... video-item.update › VideoItemController@update
-//   DELETE          video-item/{video_item} ......*.... video-item.destroy › VideoItemController@destroy
-//   GET|HEAD        video-item/{video_item}/edit .*.......... video-item.edit › VideoItemController@edit
+//   GET|HEAD        videoItem ...................*........ videoItem.index › VideoItemController@index
+//   POST            videoItem ...................*........ videoItem.store › VideoItemController@store
+//   GET|HEAD        videoItem/create ............*...... videoItem.create › VideoItemController@create
+//   GET|HEAD        videoItem/{video_item} ......*.......... videoItem.show › VideoItemController@show
+//   PUT|PATCH       videoItem/{video_item} ......*...... videoItem.update › VideoItemController@update
+//   DELETE          videoItem/{video_item} ......*.... videoItem.destroy › VideoItemController@destroy
+//   GET|HEAD        videoItem/{video_item}/edit .*.......... videoItem.edit › VideoItemController@edit
 //   GET|HEAD        video/create .................*............... video.create › VideoController@create
 //   GET|HEAD        video/{video} ................*................... video.show › VideoController@show
 //   PUT|PATCH       video/{video} ................*............... video.update › VideoController@update
 //   DELETE          video/{video} ................*............. video.destroy › VideoController@destroy
 //   GET|HEAD        video/{video}/edit ...........*................... video.edit › VideoController@edit
 
+http://127.0.0.1:8000/videoItem?video=3"

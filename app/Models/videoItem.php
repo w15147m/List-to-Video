@@ -9,4 +9,32 @@ class videoItem extends Model
 {
     /** @use HasFactory<\Database\Factories\VideoItemFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'video_id',
+        'sequence',
+        'heading',
+        'subheading',
+        'main_value',
+        'detail_text',
+        'media_url',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'sequence' => 'integer',
+    ];
+
+    /**
+     * Get the video that owns the video item.
+     */
+    public function video()
+    {
+        return $this->belongsTo(Video::class);
+    }
+
 }

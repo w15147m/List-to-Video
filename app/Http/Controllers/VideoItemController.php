@@ -1,75 +1,115 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorevideoItemRequest;
-use App\Http\Requests\UpdatevideoItemRequest;
 use App\Models\Video;
 use App\Models\videoItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class VideoItemController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-         $video = Video::first();
-        $videoItems = videoItem::orderby('created_at', 'DESC')->get();
+        $video      = Video::latest()->first();
+        $videoItems = $video->videoItems()->orderby('sequence', 'ASC')->get();
+
         return Inertia::render('video-admin/videos/VideoItemPage', [
             'video_items' => $videoItems,
-            'video' => $video,
-            'status' => 200,
+            'video'       => $video->only('id', 'title'),
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $id    = $request->query('video');
+        $video = Video::findOrFail($id);
+        info($video);
+        return Inertia::render('video-admin/videos/VideoItemCreate', [
+            'video' => $video->only('id', 'title'),
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(Request $request, Video $video)
     {
-        //
+        $validated = $request->validate([
+            'heading'    => 'nullable|string|max:255',
+            'subheading' => 'nullable|string|max:255',
+            'main_value' => 'required|string|max:1000',
+            'media_url'  => 'nullable|url|max:255',
+        ]);
+
+        DB::transaction(function () use ($video, $validated) {
+            $lastItem              = $video->videoItems()->orderByDesc('sequence')->first();
+            $validated['sequence'] = $lastItem ? $lastItem->sequence + 1 : 1;
+
+            $video->videoItems()->create($validated);
+        });
+
+        return redirect()->route('video_item.index', $video)
+            ->with('success', 'Video Item created successfully!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(videoItem $videoItem)
-    {
-        //
-    }
+    // public function edit(Video $video, videoItem $video_item)
+    // {
+    //     if ($video_item->video_id !== $video->id) {
+    //         return redirect()->route('video_item.index', $video)
+    //             ->with('error', 'Video item does not belong to the specified video.');
+    //     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(videoItem $videoItem)
-    {
-        //
-    }
+    //     return Inertia::render('video-admin/videos/VideoItemEdit', [
+    //         'video'      => $video->only('id', 'title'),
+    //         'video_item' => $video_item,
+    //     ]);
+    // }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdatevideoItemRequest $request, videoItem $videoItem)
-    {
-        //
-    }
+    // public function update(Request $request, Video $video, videoItem $video_item)
+    // {
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(videoItem $videoItem)
-    {
-        //
-    }
+    //     info($video);
+    //     info($video_item);
+    //     info($$request->all());
+
+    //     if ($video_item->video_id !== $video->id) {
+    //         return redirect()->route('video_item.index', $video)
+    //             ->with('error', 'Video item does not belong to the specified video.');
+    //     }
+
+    //     $validated = $request->validate([
+    //         'heading'    => 'nullable|string|max:255',
+    //         'subheading' => 'nullable|string|max:255',
+    //         'main_value' => 'required|string|max:1000',
+    //         'media_url'  => 'nullable|url|max:255',
+    //     ]);
+
+    //     $video_item->update($validated);
+
+    //     return redirect()->route('video_item.index', $video)
+    //         ->with('success', 'Video Item updated successfully!');
+    // }
+
+    // /**
+    //  * Remove the specified resource from storage.
+    //  * Route: /video/{video}/items/{video_item} (video_item.destroy)
+    //  */
+    // public function destroy(Video $video, videoItem $video_item)
+    // {
+    //     if ($video_item->video_id !== $video->id) {
+    //         return redirect()->back()
+    //             ->with('error', 'Video item does not belong to the specified video.');
+    //     }
+
+    //     DB::transaction(function () use ($video_item, $video) {
+    //         $video_item->delete();
+
+    //         // Re-sequence the remaining items
+    //         $video->videoItems()->orderBy('sequence', 'ASC')->each(function ($item, $index) {
+    //             $item->update(['sequence' => $index + 1]);
+    //         });
+    //     });
+
+    //     return redirect()->back()
+    //         ->with('success', 'Video Item deleted successfully!');
+    // }
 }

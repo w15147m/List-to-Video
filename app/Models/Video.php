@@ -23,4 +23,8 @@ class Video extends Model
         return $this->belongsTo(Playlist::class);
 
     }
+      public function videoItems()
+    {
+        return $this->hasMany(videoItem::class);
+    }
 }

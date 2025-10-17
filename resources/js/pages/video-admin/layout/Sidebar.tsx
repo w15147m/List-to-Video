@@ -19,7 +19,7 @@ export default function Sidebar() {
         },
           {
             title: 'Video Item', // Corrected title casing
-            href: '/video-item',
+            href: '/videoItem',
         },
 
     ];
