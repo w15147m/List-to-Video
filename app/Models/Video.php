@@ -25,6 +25,6 @@ class Video extends Model
     }
       public function videoItems()
     {
-        return $this->hasMany(videoItem::class);
+        return $this->hasMany(VideoItem::class);
     }
 }

@@ -2,7 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Video;
-use App\Models\videoItem;
+use App\Models\VideoItem;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -30,7 +30,7 @@ class VideoItemController extends Controller
     }
     public function show($id)
     {
-        $videoItems = videoItem::where('id', $id)->orderby('sequence', 'ASC')->get();
+        $videoItems = VideoItem::where('id', $id)->orderby('sequence', 'ASC')->get();
         $item       = $videoItems[0];
         $video      = Video::where('id', $videoItems[0]->video_id)->first();
         info("video => " . $video);
@@ -61,16 +61,16 @@ class VideoItemController extends Controller
             'video_id'   => 'required',
 
         ]);
-        $nextSequence = videoItem::where('video_id', $validated['video_id'])
+        $nextSequence = VideoItem::where('video_id', $validated['video_id'])
             ->max('sequence');
         $validated['sequence'] = ($nextSequence ?? 0) + 1;
-        videoItem::create($validated);
+        VideoItem::create($validated);
         return $this->showVideoItems($validated['video_id']);
     }
     public function edit($id)
     {
 
-        $videoItems = videoItem::where('id', $id)->first();
+        $videoItems = VideoItem::where('id', $id)->first();
         $video      = Video::where('id', $videoItems->video_id)->first();
         return Inertia::render('video-admin/videos/videoItem/VideoItemEdit', [
             'video_item' => $videoItems,
@@ -82,7 +82,7 @@ class VideoItemController extends Controller
     public function update(Request $request, $id)
     {
 
-        $video_item = videoItem::where('id', $id)->first();
+        $video_item = VideoItem::where('id', $id)->first();
 
         $validated = $request->validate([
             'heading'    => 'nullable|string|max:255',
@@ -104,7 +104,7 @@ class VideoItemController extends Controller
     //  */
     public function destroy($id)
     {
-        $videoItem = videoItem::findOrFail($id);
+        $videoItem = VideoItem::findOrFail($id);
         $videoId   = $videoItem->video_id;
         $videoItem->delete();
         return $this->showVideoItems($videoId);
