@@ -1,5 +1,4 @@
 import { Button } from '@/components/ui/button';
-import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import { ArrowDown, ArrowUp, Pencil, Trash2 } from 'lucide-react';
 import CommonLayout from '../../layout/commonLayout';
@@ -29,10 +28,7 @@ export default function VideoItemPage({
     video,
     video_items,
 }: VideoItemPageProps) {
-    const breadcrumbs: BreadcrumbItem[] = [
-        { title: 'Video Admin', href: '/video-admin' },
 
-    ];
 
     const pageInfo = {
         title: `Items for: ${video.title}`,
@@ -41,7 +37,7 @@ export default function VideoItemPage({
     };
 
     return (
-        <CommonLayout breadcrumbs={breadcrumbs} pageInfo={pageInfo}>
+        <CommonLayout pageInfo={pageInfo}>
             <Head title={`Items for: ${video.title}`} />
             <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-neutral-200 dark:divide-neutral-700">

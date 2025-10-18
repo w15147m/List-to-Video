@@ -17,15 +17,12 @@ export default function Sidebar() {
             title: 'Video List', // Corrected title casing
             href: '/video',
         },
-          {
-            title: 'Video Item', // Corrected title casing
-            href: '/videoItem',
-        },
+
 
     ];
 
     return (
-        <Card className="hidden w-64 shrink-0 p-4 shadow-lg lg:block">
+        <Card className="hidden w-64 shrink-0 p-4 shadow-lg lg:block h-[fit-content]">
             <nav className="space-y-1 text-sm">
                 <h3 className="mb-2 text-lg font-bold text-neutral-900 dark:text-neutral-100">
                     Admin Menu

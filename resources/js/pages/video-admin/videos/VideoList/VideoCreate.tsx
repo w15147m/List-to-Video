@@ -1,4 +1,3 @@
-import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
 import CommonLayout from '../../layout/commonLayout';
 import VideoForm from './components/VideoForm';
@@ -14,10 +13,6 @@ interface VideoCreateProps {
     playlists: PlaylistOption[];
 }
 
-const breadcrumbs: BreadcrumbItem[] = [
-    { title: 'Video Admin', href: '/video-admin' },
-    { title: 'Video List', href: route('video.index') },
-];
 
 const pageInfo = {
     title: 'Create New Video',
@@ -27,7 +22,7 @@ const pageInfo = {
 
 export default function VideoCreate({ playlists }: VideoCreateProps) {
     return (
-        <CommonLayout breadcrumbs={breadcrumbs} pageInfo={pageInfo}>
+        <CommonLayout  pageInfo={pageInfo}>
             <Head title="Create Video" />
             <VideoForm submitRoute="video.store" playlists={playlists} />
         </CommonLayout>

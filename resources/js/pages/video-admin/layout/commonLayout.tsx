@@ -6,7 +6,7 @@ import { Link } from '@inertiajs/react';
 import { Plus } from 'lucide-react';
 import Sidebar from './Sidebar';
 interface Props {
-    breadcrumbs?: BreadcrumbItem[];
+    breadcrumb?: BreadcrumbItem[];
     children: React.ReactNode;
     pageInfo?: {
         title: string | null;
@@ -16,11 +16,11 @@ interface Props {
 }
 export default function CommonLayout({
     children,
-    breadcrumbs,
+    breadcrumb,
     pageInfo,
 }: Props) {
     return (
-        <AppLayout breadcrumbs={breadcrumbs}>
+        <AppLayout breadcrumbs={breadcrumb}>
             <div className="mx-auto flex w-full max-w-7xl gap-6 p-4">
                 <Sidebar />
                 <div className="min-w-0 flex-1">

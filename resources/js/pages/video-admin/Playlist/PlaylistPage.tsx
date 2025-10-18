@@ -1,5 +1,4 @@
 import { Button } from '@/components/ui/button';
-import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import { Plus } from 'lucide-react'; // Import Plus icon
 import DeleteButton from '../components/DeleteButton';
@@ -20,10 +19,7 @@ interface PlaylistPageProps {
 
 // --- 2. The Playlist Component ---
 
-const breadcrumbs: BreadcrumbItem[] = [
-    { title: 'Video Admin', href: '/video-admin' },
-    { title: 'Playlists', href: '/playlist' },
-];
+
 const pageInfo = {
     title: ' Playlist Management ',
     btnText: 'Create',
@@ -31,7 +27,7 @@ const pageInfo = {
 }
 export default function PlaylistPage({ playlists }: PlaylistPageProps) {
     return (
-        <CommonLayout breadcrumbs={breadcrumbs} pageInfo={pageInfo}>
+        <CommonLayout pageInfo={pageInfo}>
             <Head title="Playlists" />
             <div className="pt-2">
                 <div className="overflow-x-auto">

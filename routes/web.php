@@ -15,21 +15,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
 
+    //
+    Route::get('video/Items/{id}', [VideoItemController::class, 'showVideoItems']);
     Route::get('playlist', function () {
         return Inertia::render('video-admin/Playlist/PlaylistPage');
     })->name('playlist');
-     Route::resources([
-        'playlist' => PlaylistController::class,
+    Route::resources([
+        'playlist'  => PlaylistController::class,
         'video'     => VideoController::class,
-        'videoItem'=> VideoItemController::class,
+        'videoItem' => VideoItemController::class,
     ]);
 });
 
 require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';
-
-
-
 
 //   GET|HEAD        playlist ....................*.......... playlist.index › PlaylistController@index
 //   POST            playlist ....................*.......... playlist.store › PlaylistController@store
@@ -53,4 +52,4 @@ require __DIR__ . '/auth.php';
 //   DELETE          video/{video} ................*............. video.destroy › VideoController@destroy
 //   GET|HEAD        video/{video}/edit ...........*................... video.edit › VideoController@edit
 
-http://127.0.0.1:8000/videoItem?video=3"
+http: //127.0.0.1:8000/videoItem?video=3"

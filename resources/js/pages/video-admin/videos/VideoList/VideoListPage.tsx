@@ -1,7 +1,9 @@
 import { Button } from '@/components/ui/button';
-import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/react';
-import { Pencil, Plus, Trash2, Video } from 'lucide-react';
+import { Video } from 'lucide-react';
+import DeleteButton from '../../components/DeleteButton';
+import EditButton from '../../components/EditButton';
+import EyeButton from '../../components/EditButton copy';
 import CommonLayout from '../../layout/commonLayout';
 
 interface VideoItem {
@@ -16,7 +18,6 @@ interface VideoItem {
 interface VideoListPageProps {
     videos: VideoItem[];
 }
-
 
 const getStatusClasses = (status: VideoItem['status']) => {
     switch (status) {
@@ -34,10 +35,7 @@ const getStatusClasses = (status: VideoItem['status']) => {
 
 // --- 3. The Video List Component ---
 
-const breadcrumbs: BreadcrumbItem[] = [
-    { title: 'Video Admin', href: '/video-admin' },
-    { title: 'Video List', href: '/video' },
-];
+
 
 // 🆕 ADDED PAGE INFO
 const pageInfo = {
@@ -49,7 +47,7 @@ const pageInfo = {
 
 export default function VideoListPage({ videos }: VideoListPageProps) {
     return (
-        <CommonLayout breadcrumbs={breadcrumbs} pageInfo={pageInfo}>
+        <CommonLayout pageInfo={pageInfo}>
             <Head title="Video List" />
 
             <div className="overflow-x-auto">
@@ -73,9 +71,7 @@ export default function VideoListPage({ videos }: VideoListPageProps) {
                             </th>
                             <th className="px-4 py-3 text-center text-xs font-medium tracking-wider text-neutral-500 uppercase dark:text-neutral-400">
                                 Actions
-
                             </th>
-
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-neutral-200 bg-white dark:divide-neutral-700 dark:bg-neutral-900/50">
@@ -124,38 +120,17 @@ export default function VideoListPage({ videos }: VideoListPageProps) {
                                                 <Video className="size-4" />
                                             </Link>
                                         </Button>
-
-                                        <Button
-                                            asChild
-                                            variant="outline"
-                                            size="icon"
-                                            title={`Edit ${video.title}`}
-                                        >
-                                            <Link
-                                                href={`/video/${video.id}/edit`}
-                                            >
-                                                <Pencil className="size-4" />
-                                            </Link>
-                                        </Button>
-
-                                        <Link
-                                            href={`/video/${video.id}`}
-                                            method="delete"
-                                            preserveScroll
-                                            className="inline-flex items-center justify-center rounded-md border border-transparent bg-red-600 p-2 text-sm font-medium text-white hover:bg-red-700 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:outline-none"
-                                            title="Delete Item"
-                                            onClick={(e) => {
-                                                if (
-                                                    !confirm(
-                                                        'Are you sure you want to delete this item?',
-                                                    )
-                                                ) {
-                                                    e.preventDefault();
-                                                }
-                                            }}
-                                        >
-                                            <Trash2 className="size-4" />
-                                        </Link>
+                                        <EyeButton
+                                            route={`/video/Items/${video.id}`}
+                                        ></EyeButton>
+                                        {/* Edit Button */}
+                                        <EditButton
+                                            route={`/video/${video.id}/edit`}
+                                        ></EditButton>
+                                        {/* Delete Button */}
+                                        <DeleteButton
+                                            route={`Delete ${video.id}`}
+                                        ></DeleteButton>
                                     </td>
                                 </tr>
                             ))}

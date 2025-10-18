@@ -1,6 +1,5 @@
 import React from 'react';
 import { Head } from '@inertiajs/react';
-import { type BreadcrumbItem } from '@/types';
 import CommonLayout from '../../layout/commonLayout';
 import VideoItemForm from './components/VideoItemForm';
 declare function route(name: string, parameters?: any): string;
@@ -20,9 +19,7 @@ interface VideoItemEditProps {
 }
 
 export default function VideoItemEdit({ video, video_item }: VideoItemEditProps) {
-    const breadcrumbs: BreadcrumbItem[] = [
-        { title: 'Video Admin', href: '/video-admin' },
-  ];
+
 
     const pageInfo = {
         title: `Edit Item #${video_item.sequence} for: ${video.title}`,
@@ -31,7 +28,7 @@ export default function VideoItemEdit({ video, video_item }: VideoItemEditProps)
     };
 
     return (
-        <CommonLayout breadcrumbs={breadcrumbs} pageInfo={pageInfo}>
+        <CommonLayout  pageInfo={pageInfo}>
             <Head title={`Edit Item: ${video.title}`} />
             <VideoItemForm
                 videoId={video.id}
