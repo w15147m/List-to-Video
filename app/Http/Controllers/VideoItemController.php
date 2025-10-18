@@ -64,7 +64,7 @@ class VideoItemController extends Controller
         $nextSequence = videoItem::where('video_id', $validated['video_id'])
             ->max('sequence');
         $validated['sequence'] = ($nextSequence ?? 0) + 1;
-        $videoItem             = videoItem::create($validated);
+        videoItem::create($validated);
         return $this->showVideoItems($validated['video_id']);
     }
     public function edit($id)
@@ -79,30 +79,24 @@ class VideoItemController extends Controller
 
     }
 
-    // public function update(Request $request, Video $video, videoItem $video_item)
-    // {
+    public function update(Request $request, $id)
+    {
 
-    //     info($video);
-    //     info($video_item);
-    //     info($$request->all());
+        $video_item = videoItem::where('id', $id)->first();
 
-    //     if ($video_item->video_id !== $video->id) {
-    //         return redirect()->route('video_item.index', $video)
-    //             ->with('error', 'Video item does not belong to the specified video.');
-    //     }
+        $validated = $request->validate([
+            'heading'    => 'nullable|string|max:255',
+            'subheading' => 'nullable|string|max:255',
+            'main_value' => 'required|string|max:1000',
+            'media_url'  => 'nullable|url|max:255',
+            'video_id'   => 'required',
+        ]);
+         $video_item->update($validated);
+        info($video_item);
 
-    //     $validated = $request->validate([
-    //         'heading'    => 'nullable|string|max:255',
-    //         'subheading' => 'nullable|string|max:255',
-    //         'main_value' => 'required|string|max:1000',
-    //         'media_url'  => 'nullable|url|max:255',
-    //     ]);
+        return $this->showVideoItems($validated['video_id']);
 
-    //     $video_item->update($validated);
-
-    //     return redirect()->route('video_item.index', $video)
-    //         ->with('success', 'Video Item updated successfully!');
-    // }
+    }
 
     // /**
     //  * Remove the specified resource from storage.

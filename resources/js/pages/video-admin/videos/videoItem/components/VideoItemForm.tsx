@@ -1,9 +1,9 @@
-import React, { FormEventHandler } from 'react';
-import { useForm, Link } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { Link, useForm } from '@inertiajs/react';
+import { FormEventHandler } from 'react';
 declare function route(name: string, parameters?: any): string;
 
 interface VideoItemFormProps {
@@ -29,24 +29,25 @@ interface VideoItem {
     media_url: string | null;
 }
 
-
-
-export default function VideoItemForm({ videoItem, videoId, submitRoute }: VideoItemFormProps) {
+export default function VideoItemForm({
+    videoItem,
+    videoId,
+    submitRoute,
+}: VideoItemFormProps) {
     const isEditing = !!videoItem;
-    const { data, setData, post, put, processing, errors } = useForm<VideoItemFormData>({
-        heading: videoItem?.heading ?? '',
-        subheading: videoItem?.subheading ?? '',
-        main_value: videoItem?.main_value ?? '',
-        media_url: videoItem?.media_url ?? '',
-        video_id: videoId,
-    });
+    const { data, setData, post, put, processing, errors } =
+        useForm<VideoItemFormData>({
+            heading: videoItem?.heading ?? '',
+            subheading: videoItem?.subheading ?? '',
+            main_value: videoItem?.main_value ?? '',
+            media_url: videoItem?.media_url ?? '',
+            video_id: videoId,
+        });
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-
-         const routeParams = isEditing ? { video_item: videoItem.id } : {};
-
+        const routeParams = isEditing ? { videoItem: videoItem.id } : {};
         const submitData = {
             ...data,
             video_id: videoId,
@@ -71,7 +72,11 @@ export default function VideoItemForm({ videoItem, videoId, submitRoute }: Video
                         onChange={(e) => setData('heading', e.target.value)}
                         className={errors.heading ? 'border-red-500' : ''}
                     />
-                    {errors.heading && <p className="text-sm text-red-500 mt-1">{errors.heading}</p>}
+                    {errors.heading && (
+                        <p className="mt-1 text-sm text-red-500">
+                            {errors.heading}
+                        </p>
+                    )}
                 </div>
                 <div>
                     <Label htmlFor="subheading">Subheading (Optional)</Label>
@@ -82,7 +87,11 @@ export default function VideoItemForm({ videoItem, videoId, submitRoute }: Video
                         onChange={(e) => setData('subheading', e.target.value)}
                         className={errors.subheading ? 'border-red-500' : ''}
                     />
-                    {errors.subheading && <p className="text-sm text-red-500 mt-1">{errors.subheading}</p>}
+                    {errors.subheading && (
+                        <p className="mt-1 text-sm text-red-500">
+                            {errors.subheading}
+                        </p>
+                    )}
                 </div>
                 <div>
                     <Label htmlFor="main_value">Main Value</Label>
@@ -93,10 +102,16 @@ export default function VideoItemForm({ videoItem, videoId, submitRoute }: Video
                         className={errors.main_value ? 'border-red-500' : ''}
                         rows={3}
                     />
-                    {errors.main_value && <p className="text-sm text-red-500 mt-1">{errors.main_value}</p>}
+                    {errors.main_value && (
+                        <p className="mt-1 text-sm text-red-500">
+                            {errors.main_value}
+                        </p>
+                    )}
                 </div>
                 <div>
-                    <Label htmlFor="media_url">Media URL (Image/Video Link)</Label>
+                    <Label htmlFor="media_url">
+                        Media URL (Image/Video Link)
+                    </Label>
                     <Input
                         id="media_url"
                         type="url"
@@ -104,7 +119,11 @@ export default function VideoItemForm({ videoItem, videoId, submitRoute }: Video
                         onChange={(e) => setData('media_url', e.target.value)}
                         className={errors.media_url ? 'border-red-500' : ''}
                     />
-                    {errors.media_url && <p className="text-sm text-red-500 mt-1">{errors.media_url}</p>}
+                    {errors.media_url && (
+                        <p className="mt-1 text-sm text-red-500">
+                            {errors.media_url}
+                        </p>
+                    )}
                 </div>
 
                 <div className="flex items-center justify-end space-x-2">
@@ -112,7 +131,11 @@ export default function VideoItemForm({ videoItem, videoId, submitRoute }: Video
                         {isEditing ? 'Update Item' : 'Create Item'}
                     </Button>
                     <Button asChild variant="secondary">
-                        <Link href={route('videoItem.index', { video: videoId })}>Cancel</Link>
+                        <Link
+                            href={route('videoItem.index', { video: videoId })}
+                        >
+                            Cancel
+                        </Link>
                     </Button>
                 </div>
             </form>
