@@ -14,7 +14,7 @@ class VideoItemController extends Controller
         $video      = Video::latest()->first();
         $videoItems = $video->videoItems()->orderby('sequence', 'ASC')->get();
 
-        return Inertia::render('video-admin/videos/VideoItemPage', [
+        return Inertia::render('video-admin/videos/videoItem/VideoItemPage', [
             'video_items' => $videoItems,
             'video'       => $video->only('id', 'title'),
         ]);
@@ -24,7 +24,7 @@ class VideoItemController extends Controller
     {
         $id    = $request->query('video');
         $video = Video::findOrFail($id);
-        return Inertia::render('video-admin/videos/VideoItemCreate', [
+        return Inertia::render('video-admin/videos/videoItem/VideoItemCreate', [
             'video' => $video->only('id', 'title'),
         ]);
     }
@@ -34,7 +34,7 @@ class VideoItemController extends Controller
         $item       = $videoItems[0];
         $video      = Video::where('id', $videoItems[0]->video_id)->first();
         info("video => " . $video);
-        return Inertia::render('video-admin/videos/VideoItemPage', [
+        return Inertia::render('video-admin/videos/videoItem/VideoItemPage', [
             'video_items' => $videoItems,
             'video'       => $video->only('id', 'title'),
         ]);
@@ -44,7 +44,7 @@ class VideoItemController extends Controller
     {
         $video      = Video::where('id', $id)->first();
         $videoItems = $video->videoItems()->orderby('sequence', 'ASC')->get();
-        return Inertia::render('video-admin/videos/VideoItemPage', [
+        return Inertia::render('video-admin/videos/videoItem/VideoItemPage', [
             'video_items' => $videoItems,
             'video'       => $video->only('id', 'title'),
         ]);
@@ -67,12 +67,12 @@ class VideoItemController extends Controller
         $videoItem             = videoItem::create($validated);
         return $this->showVideoItems($validated['video_id']);
     }
-
     public function edit($id)
     {
+
         $videoItems = videoItem::where('id', $id)->first();
         $video      = Video::where('id', $videoItems->video_id)->first();
-        return Inertia::render('video-admin/videos/VideoItemEdit', [
+        return Inertia::render('video-admin/videos/videoItem/VideoItemEdit', [
             'video_item' => $videoItems,
             'video'      => $video->only('id', 'title'),
         ]);

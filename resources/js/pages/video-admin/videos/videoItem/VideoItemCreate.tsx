@@ -1,6 +1,6 @@
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
-import CommonLayout from '../layout/commonLayout';
+import CommonLayout from '../../layout/commonLayout';
 import VideoItemForm from './components/VideoItemForm';
 declare function route(name: string, parameters?: any): string;
 

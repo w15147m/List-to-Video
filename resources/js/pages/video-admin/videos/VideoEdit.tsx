@@ -2,7 +2,7 @@ import React from 'react';
 import { Head } from '@inertiajs/react';
 import { type BreadcrumbItem } from '@/types';
 import CommonLayout from '@/pages/video-admin/layout/commonLayout';
-import VideoForm from './components/VideoForm';
+import VideoForm from './VideoForm';
 
 declare function route(name: string, parameters?: any): string;
 

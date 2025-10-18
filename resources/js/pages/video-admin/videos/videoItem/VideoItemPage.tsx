@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import { ArrowDown, ArrowUp, Pencil, Trash2 } from 'lucide-react';
-import CommonLayout from '../layout/commonLayout';
+import CommonLayout from '../../layout/commonLayout';
 declare function route(name: string, parameters?: any): string;
 
 
