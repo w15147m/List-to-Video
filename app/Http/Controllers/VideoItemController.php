@@ -33,7 +33,6 @@ class VideoItemController extends Controller
         $videoItems = VideoItem::where('id', $id)->orderby('sequence', 'ASC')->get();
         $item       = $videoItems[0];
         $video      = Video::where('id', $videoItems[0]->video_id)->first();
-        info("video => " . $video);
         return Inertia::render('video-admin/videos/videoItem/VideoItemPage', [
             'video_items' => $videoItems,
             'video'       => $video->only('id', 'title'),
@@ -53,6 +52,7 @@ class VideoItemController extends Controller
     public function store(Request $request)
     {
 
+         info($request->all());
         $validated = $request->validate([
             'heading'    => 'nullable|string|max:255',
             'subheading' => 'nullable|string|max:255',
@@ -65,7 +65,7 @@ class VideoItemController extends Controller
             ->max('sequence');
         $validated['sequence'] = ($nextSequence ?? 0) + 1;
         VideoItem::create($validated);
-        return $this->showVideoItems($validated['video_id']);
+        // return $this->showVideoItems($validated['video_id']);
     }
     public function edit($id)
     {

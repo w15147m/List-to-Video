@@ -5,7 +5,6 @@ import React from 'react';
 
 export default function Sidebar() {
     const { url } = usePage();
-
     const mainNavItems: NavItem[] = [
         { title: 'Playlist', href: '/playlist' },
         { title: 'Video List', href: '/video' },

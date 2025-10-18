@@ -4,7 +4,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import ImageGalleryInput from '@/pages/video-admin/components/ImageGalleryInput';
 import { Link, useForm } from '@inertiajs/react';
-import { FormEventHandler, useState } from 'react';
+import { FormEventHandler } from 'react';
 declare function route(name: string, parameters?: any): string;
 
 interface VideoItemFormProps {
@@ -37,18 +37,23 @@ export default function VideoItemForm({
     submitRoute,
 }: VideoItemFormProps) {
     const isEditing = !!videoItem;
-    const { data, setData, post, put, processing, errors } =
-        useForm<VideoItemFormData>({
-            heading: videoItem?.heading ?? '',
-            subheading: videoItem?.subheading ?? '',
-            main_value: videoItem?.main_value ?? '',
-            media_url: videoItem?.media_url ?? '',
-            video_id: videoId,
-        });
+    const { data, setData, post, put, processing, errors } = useForm<
+        VideoItemFormData & { image_id: any; image_name: any }
+    >({
+        heading: videoItem?.heading ?? '',
+        subheading: videoItem?.subheading ?? '',
+        main_value: videoItem?.main_value ?? '',
+        media_url: videoItem?.media_url ?? '',
+        video_id: videoId,
+        image_id: null, // ✅ add gallery field
+        image_name: null,
+    });
 
-    const [galleryData, setGalleryData] = useState<
-        { id: number; image_url: string; name: string }[]
-    >([]);
+    //    const [galleryData, setGalleryData] = useState<{
+    //         id: number;
+    //         image_url: string;
+    //         name: string;
+    //     }>();
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
@@ -56,7 +61,6 @@ export default function VideoItemForm({
         const routeParams = isEditing ? { videoItem: videoItem.id } : {};
         const submitData = {
             ...data,
-            video_id: videoId,
         };
 
         if (isEditing) {
@@ -70,25 +74,36 @@ export default function VideoItemForm({
         <div className="p-6 pt-0">
             <form onSubmit={submit} className="space-y-6">
                 {/* Layout Grid */}
-                <div className="grid grid-cols-[180px_1fr] gap-4 items-start">
+                <div className="grid grid-cols-[180px_1fr] items-start gap-4">
                     {/* ✅ Left column — Image Upload */}
                     <div className="">
                         <div className="w-full max-w-[220px]">
-                           <Label htmlFor="heading">Heading (Optional)</Label>
-                           
+                            <Label htmlFor="heading">Heading (Optional)</Label>
+
                             <ImageGalleryInput
                                 initialGalleryImages={
                                     data.media_url
-                                        ? [{ id: 1, image_url: data.media_url, name: 'Selected' }]
+                                        ? [
+                                              {
+                                                  id: 1,
+                                                  image_url: data.media_url,
+                                                  name: 'Selected',
+                                              },
+                                          ]
                                         : []
                                 }
                                 onGalleryChange={(images) => {
                                     if (images.length > 0) {
-                                        setData('media_url', images[0].image_url);
+                                        const selected = images[0];
+                                        setData({
+                                            ...data,
+                                            image_id: selected.id,
+                                            image_name: selected.name,
+                                            media_url: selected.image_url,
+                                        });
                                     } else {
                                         setData('media_url', '');
                                     }
-                                    setGalleryData(images);
                                 }}
                                 isSingle={true}
                                 isEditing={isEditing}
@@ -109,25 +124,39 @@ export default function VideoItemForm({
                                 id="heading"
                                 type="text"
                                 value={data.heading}
-                                onChange={(e) => setData('heading', e.target.value)}
-                                className={errors.heading ? 'border-red-500' : ''}
+                                onChange={(e) =>
+                                    setData('heading', e.target.value)
+                                }
+                                className={
+                                    errors.heading ? 'border-red-500' : ''
+                                }
                             />
                             {errors.heading && (
-                                <p className="mt-1 text-sm text-red-500">{errors.heading}</p>
+                                <p className="mt-1 text-sm text-red-500">
+                                    {errors.heading}
+                                </p>
                             )}
                         </div>
 
                         <div>
-                            <Label htmlFor="subheading">Subheading (Optional)</Label>
+                            <Label htmlFor="subheading">
+                                Subheading (Optional)
+                            </Label>
                             <Input
                                 id="subheading"
                                 type="text"
                                 value={data.subheading}
-                                onChange={(e) => setData('subheading', e.target.value)}
-                                className={errors.subheading ? 'border-red-500' : ''}
+                                onChange={(e) =>
+                                    setData('subheading', e.target.value)
+                                }
+                                className={
+                                    errors.subheading ? 'border-red-500' : ''
+                                }
                             />
                             {errors.subheading && (
-                                <p className="mt-1 text-sm text-red-500">{errors.subheading}</p>
+                                <p className="mt-1 text-sm text-red-500">
+                                    {errors.subheading}
+                                </p>
                             )}
                         </div>
 
@@ -136,12 +165,18 @@ export default function VideoItemForm({
                             <Textarea
                                 id="main_value"
                                 value={data.main_value}
-                                onChange={(e) => setData('main_value', e.target.value)}
-                                className={errors.main_value ? 'border-red-500' : ''}
+                                onChange={(e) =>
+                                    setData('main_value', e.target.value)
+                                }
+                                className={
+                                    errors.main_value ? 'border-red-500' : ''
+                                }
                                 rows={4}
                             />
                             {errors.main_value && (
-                                <p className="mt-1 text-sm text-red-500">{errors.main_value}</p>
+                                <p className="mt-1 text-sm text-red-500">
+                                    {errors.main_value}
+                                </p>
                             )}
                         </div>
                     </div>
@@ -153,7 +188,9 @@ export default function VideoItemForm({
                         {isEditing ? 'Update Item' : 'Create Item'}
                     </Button>
                     <Button asChild variant="secondary">
-                        <Link href={route('videoItem.index', { video: videoId })}>
+                        <Link
+                            href={route('videoItem.index', { video: videoId })}
+                        >
                             Cancel
                         </Link>
                     </Button>
