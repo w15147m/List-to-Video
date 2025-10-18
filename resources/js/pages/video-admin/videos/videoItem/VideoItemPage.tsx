@@ -38,7 +38,7 @@ export default function VideoItemPage({
     return (
         <CommonLayout pageInfo={pageInfo}>
             <Head title={`Items for: ${video.title}`} />
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto pt-2">
                 <table className="min-w-full divide-y divide-neutral-200 dark:divide-neutral-700">
                     <thead className="bg-neutral-50 dark:bg-neutral-800/50">
                         <tr>

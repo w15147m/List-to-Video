@@ -50,7 +50,7 @@ export default function VideoListPage({ videos }: VideoListPageProps) {
         <CommonLayout pageInfo={pageInfo}>
             <Head title="Video List" />
 
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto mt-2">
                 <table className="min-w-full divide-y divide-neutral-200 dark:divide-neutral-700">
                     <thead className="bg-neutral-50 dark:bg-neutral-800/50">
                         <tr>

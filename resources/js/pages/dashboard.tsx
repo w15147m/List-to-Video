@@ -3,8 +3,6 @@ import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
-import { useState } from 'react';
-import ImageGalleryInput from './video-admin/components/ImageGalleryInput';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -14,10 +12,6 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Dashboard() {
-    const [galleryData, setGalleryData] = useState<
-        { id: number; image_url: string; name: string }[]
-    >([]);
-
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
@@ -34,27 +28,7 @@ export default function Dashboard() {
                     </div>
                 </div>
                 <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
-                    <ImageGalleryInput
-                        initialGalleryImages={[]}
-                        onGalleryChange={(images) => setGalleryData(images)}
-                        isSingle={true}
-                    />
-                    <div className="mt-4">
-                        {galleryData.map((img) => (
-                            <div key={img.id}>
-                                <p>
-                                    <b>ID:</b> {img.id}
-                                </p>
-                                <p>
-                                    <b>Name:</b> {img.name}
-                                </p>
-                                <p>
-                                    <b>URL:</b> {img.image_url}
-                                </p>
-                                <hr className="my-2" />
-                            </div>
-                        ))}
-                    </div>
+                    <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
                 </div>
             </div>
         </AppLayout>
