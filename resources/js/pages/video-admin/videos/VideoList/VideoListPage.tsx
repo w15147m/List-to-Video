@@ -129,7 +129,7 @@ export default function VideoListPage({ videos }: VideoListPageProps) {
                                         ></EditButton>
                                         {/* Delete Button */}
                                         <DeleteButton
-                                            route={`Delete ${video.id}`}
+                                            route={`/video/${video.id}`}
                                         ></DeleteButton>
                                     </td>
                                 </tr>

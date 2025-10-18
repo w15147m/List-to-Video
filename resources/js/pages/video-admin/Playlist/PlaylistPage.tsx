@@ -73,7 +73,7 @@ export default function PlaylistPage({ playlists }: PlaylistPageProps) {
                                         ></EditButton>
                                         {/* Delete Button */}
                                         <DeleteButton
-                                            route={`Delete ${playlist.name}`}
+                                            route={`playlist/${playlist.id}`}
                                         ></DeleteButton>
                                     </td>
                                 </tr>

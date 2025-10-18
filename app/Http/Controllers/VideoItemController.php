@@ -102,23 +102,12 @@ class VideoItemController extends Controller
     //  * Remove the specified resource from storage.
     //  * Route: /video/{video}/items/{video_item} (video_item.destroy)
     //  */
-    // public function destroy(Video $video, videoItem $video_item)
-    // {
-    //     if ($video_item->video_id !== $video->id) {
-    //         return redirect()->back()
-    //             ->with('error', 'Video item does not belong to the specified video.');
-    //     }
+    public function destroy($id)
+    {
+        $videoItem = videoItem::findOrFail($id);
+        $videoId   = $videoItem->video_id;
+        $videoItem->delete();
+        return $this->showVideoItems($videoId);
 
-    //     DB::transaction(function () use ($video_item, $video) {
-    //         $video_item->delete();
-
-    //         // Re-sequence the remaining items
-    //         $video->videoItems()->orderBy('sequence', 'ASC')->each(function ($item, $index) {
-    //             $item->update(['sequence' => $index + 1]);
-    //         });
-    //     });
-
-    //     return redirect()->back()
-    //         ->with('success', 'Video Item deleted successfully!');
-    // }
+    }
 }

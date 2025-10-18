@@ -96,22 +96,12 @@ class PlaylistController extends Controller
      */
     public function destroy($id)
     {
-        // Using find() is cleaner for primary key lookups
-        $playlist = Playlist::find($id);
-
-        if ($playlist == null) {
-            return response()->json(
-                [
-                    'status'  => 404,
-                    'message' => 'Data not found',
-                    'data'    => [],
-                ]
-            );
-        }
+        $playlist = Playlist::findOrFail($id);
         $playlist->delete();
-        return response()->json([
-            'message' => 'Data Deleted successfully',
-        ], 200);
+
+        return redirect()->route('playlist.index')
+            ->with('success', 'Playlist deleted successfully!');
+
     }
 
 }
