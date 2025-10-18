@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import { Pencil, Plus, Trash2, Video } from 'lucide-react';
-import CommonLayout from '../layout/commonLayout';
+import CommonLayout from '../../layout/commonLayout';
 
 interface VideoItem {
     id: number;
@@ -16,6 +16,7 @@ interface VideoItem {
 interface VideoListPageProps {
     videos: VideoItem[];
 }
+
 
 const getStatusClasses = (status: VideoItem['status']) => {
     switch (status) {

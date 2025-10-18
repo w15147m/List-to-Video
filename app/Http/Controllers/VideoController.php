@@ -12,7 +12,7 @@ class VideoController extends Controller
     public function index()
     {
         $videos = Video::with('playlist')->orderby('created_at', 'DESC')->get();
-        return Inertia::render('video-admin/videos/VideoListPage', [
+        return Inertia::render('video-admin/videos/VideoList/VideoListPage', [
             'videos' => $videos->map(function ($video) {
                 return [
                     'id'            => $video->id,
@@ -32,7 +32,7 @@ class VideoController extends Controller
     {
         $playlists = Playlist::select('id', 'name')->orderby('name', 'ASC')->get();
 
-        return Inertia::render('video-admin/videos/VideoCreate', [
+        return Inertia::render('video-admin/videos/VideoList/VideoCreate', [
             'playlists' => $playlists,
         ]);
     }
@@ -63,7 +63,7 @@ class VideoController extends Controller
     {
         $playlists = Playlist::select('id', 'name')->orderby('name', 'ASC')->get();
 
-        return Inertia::render('video-admin/videos/VideoEdit', [
+        return Inertia::render('video-admin/videos/VideoList/VideoEdit', [
             'video'     => $video,
             'playlists' => $playlists,
         ]);
