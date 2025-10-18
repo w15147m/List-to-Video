@@ -1,140 +1,165 @@
-import { Trash2 } from 'lucide-react';
-import React, { useState } from 'react';
 import axios from 'axios';
+import { Trash2, Upload } from 'lucide-react';
+import React, { useState } from 'react';
 
 interface ImageData {
-  id: number;
-  image_url: string;
-  name: string;
+    id: number;
+    image_url: string;
+    name: string;
 }
 
 interface ImageGalleryInputProps {
-  initialGalleryImages?: ImageData[];
-  onGalleryChange: (images: ImageData[]) => void;
-  isEditing?: boolean;
+    initialGalleryImages?: ImageData[];
+    onGalleryChange: (images: ImageData[]) => void;
+    isEditing?: boolean;
+    isSingle?: boolean; // ✅ single or multiple mode
 }
-
 const ImageGalleryInput: React.FC<ImageGalleryInputProps> = ({
-  initialGalleryImages = [],
-  onGalleryChange,
+    initialGalleryImages = [],
+    onGalleryChange,
+    isSingle = false, // default = multiple
 }) => {
-  const [isLoader, setLoader] = useState(false);
-  const [galleryImages, setGalleryImages] = useState<ImageData[]>(initialGalleryImages);
+    const [isLoader, setLoader] = useState(false);
+    const [galleryImages, setGalleryImages] =
+        useState<ImageData[]>(initialGalleryImages);
 
-  const handleFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLoader(true);
-    const file = e.target.files?.[0];
-    if (!file) {
-      setLoader(false);
-      return;
-    }
+    const handleFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        setLoader(true);
+        const file = e.target.files?.[0];
+        if (!file) {
+            setLoader(false);
+            return;
+        }
 
-    try {
-      const formData = new FormData();
-      formData.append('image', file);
+        try {
+            const formData = new FormData();
+            formData.append('image', file);
 
-      const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+            const token = document
+                .querySelector('meta[name="csrf-token"]')
+                ?.getAttribute('content');
 
-      const response = await axios.post('/temp-image', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'X-CSRF-TOKEN': token || '',
-        },
-      });
+            const response = await axios.post('/temp-image', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'X-CSRF-TOKEN': token || '',
+                },
+            });
 
-      const { data } = response.data;
+            const { data } = response.data;
 
-      // Create a full object
-      const imageObj: ImageData = {
-        id: data.id,
-        image_url: data.image_url,
-        name: data.name,
-      };
+            const imageObj: ImageData = {
+                id: data.id,
+                image_url: data.image_url,
+                name: data.name,
+            };
 
-      // Update local state
-      const updatedImages = [...galleryImages, imageObj];
-      setGalleryImages(updatedImages);
+            const updatedImages = isSingle
+                ? [imageObj]
+                : [...galleryImages, imageObj];
 
-      // Send back to parent
-      onGalleryChange(updatedImages);
+            setGalleryImages(updatedImages);
+            onGalleryChange(updatedImages);
+        } catch (error: any) {
+            console.error(
+                'Upload Error:',
+                error.response?.data || error.message,
+            );
+        } finally {
+            setLoader(false);
+            e.target.value = '';
+        }
+    };
 
-    } catch (error: any) {
-      console.error('Upload Error:', error.response?.data || error.message);
-    } finally {
-      setLoader(false);
-      e.target.value = '';
-    }
-  };
+    const handleTrash = (imageId: number) => {
+        const filteredImages = galleryImages.filter(
+            (img) => img.id !== imageId,
+        );
+        setGalleryImages(filteredImages);
+        onGalleryChange(filteredImages);
+    };
 
-  const handleTrash = (imageId: number) => {
-    const filteredImages = galleryImages.filter(img => img.id !== imageId);
-    setGalleryImages(filteredImages);
-    onGalleryChange(filteredImages);
-  };
+    // ✅ Disable upload if single image mode and already one uploaded
+    const disableUpload = isSingle && galleryImages.length >= 1;
 
-  return (
-    <div className='mb-6'>
-      <label className='block text-sm font-medium text-gray-700 mb-2'>Images</label>
+    return (
+        <div className="mb-6">
+            <label className="mb-2 block text-sm font-medium text-gray-700">
+                {isSingle ? 'Single Image' : 'Image Gallery'}
+            </label>
 
-      <div className='flex flex-wrap w-full gap-4'>
-        {/* Upload Input */}
-        <div className='w-44 h-48'>
-          <label className="custom-file-upload block h-full">
-            <div
-              className="flex flex-col items-center justify-center h-full border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors"
-            >
-              {isLoader ? (
-                <div className="flex flex-col items-center p-4">
-                  <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
-                  <div className="mt-2 text-sm text-gray-500">Loading...</div>
-                </div>
-              ) : (
-                <div className="flex flex-col items-center p-4">
-                  <svg className="w-8 h-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-4-4v-1.889a4 4 0 011.666-3.187l1.444-1.049A4 4 0 0111.55 6H15a4 4 0 014 4v4a4 4 0 01-4 4H7z" />
-                    <polyline points="12 8 12 16" />
-                    <polyline points="9 13 12 16 15 13" />
-                  </svg>
-                  <div className="mt-1 text-sm text-gray-600">Upload</div>
-                  <div className="text-xs text-gray-400">image</div>
-                </div>
-              )}
+            <div className="flex w-full flex-wrap gap-4">
+                {/* Upload Input */}
+                {!disableUpload && (
+                    <div className="h-48 w-44">
+                        <label
+                            className={`custom-file-upload block h-full ${
+                                disableUpload
+                                    ? 'cursor-not-allowed opacity-50'
+                                    : 'cursor-pointer'
+                            }`}
+                        >
+                            <div
+                                className={`flex h-full flex-col items-center justify-center rounded-lg border-2 border-dashed transition-colors ${
+                                    disableUpload
+                                        ? 'border-gray-300 bg-gray-100'
+                                        : 'border-gray-300 bg-gray-50 hover:bg-gray-100'
+                                }`}
+                            >
+                                {isLoader ? (
+                                    <div className="flex flex-col items-center p-4">
+                                        <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent"></div>
+                                        <div className="mt-2 text-sm text-gray-500">
+                                            Uploading...
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="flex flex-col items-center p-4 text-gray-600">
+                                        {!disableUpload && <Upload></Upload>}
+                                        <div className="mt-1 text-center text-sm">
+                                            {disableUpload
+                                                ? 'only one image can upload'
+                                                : 'Image added'}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                            <input
+                                type="file"
+                                id="fileInput"
+                                className="sr-only"
+                                onChange={handleFile}
+                                accept="image/*"
+                                disabled={isLoader || disableUpload} // ✅ Disable when one image exists
+                            />
+                        </label>
+                    </div>
+                )}
+
+                {/* Uploaded Images */}
+                {galleryImages.map((image) => (
+                    <div
+                        key={image.id}
+                        className="relative h-48 w-44 overflow-hidden rounded-lg border border-gray-200 shadow-md"
+                    >
+                        <img
+                            src={image.image_url}
+                            alt={image.name}
+                            className="h-full w-full object-cover"
+                        />
+                        <button
+                            type="button"
+                            className="absolute top-1 right-1 rounded-full bg-red-600 p-1 text-white opacity-80 transition-opacity hover:opacity-100"
+                            onClick={() => handleTrash(image.id)}
+                            aria-label="Delete image"
+                        >
+                            <Trash2 className="h-4 w-4" />
+                        </button>
+                    </div>
+                ))}
             </div>
-            <input
-              type="file"
-              id="fileInput"
-              className="sr-only"
-              onChange={handleFile}
-              accept="image/*"
-              disabled={isLoader}
-            />
-          </label>
         </div>
-
-        {/* Image Gallery */}
-        {galleryImages.map((image) => (
-          <div
-            key={image.id}
-            className='relative w-44 h-48 border border-gray-200 shadow-md rounded-lg overflow-hidden'
-          >
-            <img
-              src={image.image_url}
-              alt={image.name}
-              className='w-full h-full object-cover'
-            />
-            <button
-              type="button"
-              className='absolute top-1 right-1 p-1 bg-red-600 rounded-full text-white opacity-80 hover:opacity-100 transition-opacity'
-              onClick={() => handleTrash(image.id)}
-              aria-label="Delete image"
-            >
-              <Trash2 className="w-4 h-4" />
-            </button>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+    );
 };
 
 export default ImageGalleryInput;

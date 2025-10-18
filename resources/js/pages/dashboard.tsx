@@ -37,6 +37,7 @@ export default function Dashboard() {
                     <ImageGalleryInput
                         initialGalleryImages={[]}
                         onGalleryChange={(images) => setGalleryData(images)}
+                        isSingle={true}
                     />
                     <div className="mt-4">
                         {galleryData.map((img) => (
