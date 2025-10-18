@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PlaylistController;
+use App\Http\Controllers\TempImageController;
 use App\Http\Controllers\VideoController;
 use App\Http\Controllers\VideoItemController;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +25,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         'playlist'  => PlaylistController::class,
         'video'     => VideoController::class,
         'videoItem' => VideoItemController::class,
+     'temp-image' => TempImageController::class,
+
     ]);
 });
 
