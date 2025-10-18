@@ -21,13 +21,13 @@ export default function CommonLayout({
 }: Props) {
     return (
         <AppLayout breadcrumbs={breadcrumb}>
-            <div className="mx-auto flex w-full max-w-7xl gap-6 p-4">
+            <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 p-4 lg:flex-row">
                 <Sidebar />
                 <div className="min-w-0 flex-1">
                     <Card className="overflow-hidden p-0 shadow-lg">
                         <div className="overflow-x-auto border-b border-neutral-200 dark:border-neutral-700">
                             <div className="flex justify-between px-5 pt-5">
-                                <h3 className=" text-lg font-bold text-neutral-900 dark:text-neutral-100">
+                                <h3 className="text-lg font-bold text-neutral-900 dark:text-neutral-100">
                                     {pageInfo?.title}
                                 </h3>
                                 {pageInfo?.btnText && (
