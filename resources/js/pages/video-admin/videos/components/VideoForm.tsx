@@ -45,7 +45,6 @@ export default function VideoForm({ video, submitRoute, playlists }: VideoFormPr
         title: video?.title ?? '',
         template_name: video?.template_name ?? '',
         type: video?.type ?? 'short',
-        // Set to 'null_playlist' if the ID is null, otherwise use the stringified ID
         playlist_id: video?.playlist_id ? String(video.playlist_id) : 'null_playlist',
     });
 
@@ -54,7 +53,6 @@ export default function VideoForm({ video, submitRoute, playlists }: VideoFormPr
 
         const routeParams = isEditing ? { video: video.id } : {};
 
-        // Convert 'null_playlist' value back to actual `null` for the backend
         const submitData = {
             ...data,
             playlist_id: data.playlist_id === 'null_playlist' ? null : data.playlist_id,

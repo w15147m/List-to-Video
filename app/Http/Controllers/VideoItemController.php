@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 use App\Models\Video;
 use App\Models\videoItem;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class VideoItemController extends Controller
@@ -25,44 +24,60 @@ class VideoItemController extends Controller
     {
         $id    = $request->query('video');
         $video = Video::findOrFail($id);
-        info($video);
         return Inertia::render('video-admin/videos/VideoItemCreate', [
             'video' => $video->only('id', 'title'),
         ]);
     }
-
-    public function store(Request $request, Video $video)
+    public function show($id)
     {
+        $videoItems = videoItem::where('id', $id)->orderby('sequence', 'ASC')->get();
+        $item       = $videoItems[0];
+        $video      = Video::where('id', $videoItems[0]->video_id)->first();
+        info("video => " . $video);
+        return Inertia::render('video-admin/videos/VideoItemPage', [
+            'video_items' => $videoItems,
+            'video'       => $video->only('id', 'title'),
+        ]);
+    }
+
+    public function showVideoItems($id)
+    {
+        $video      = Video::where('id', $id)->first();
+        $videoItems = $video->videoItems()->orderby('sequence', 'ASC')->get();
+        return Inertia::render('video-admin/videos/VideoItemPage', [
+            'video_items' => $videoItems,
+            'video'       => $video->only('id', 'title'),
+        ]);
+    }
+
+    public function store(Request $request)
+    {
+
         $validated = $request->validate([
             'heading'    => 'nullable|string|max:255',
             'subheading' => 'nullable|string|max:255',
             'main_value' => 'required|string|max:1000',
             'media_url'  => 'nullable|url|max:255',
+            'video_id'   => 'required',
+
         ]);
-
-        DB::transaction(function () use ($video, $validated) {
-            $lastItem              = $video->videoItems()->orderByDesc('sequence')->first();
-            $validated['sequence'] = $lastItem ? $lastItem->sequence + 1 : 1;
-
-            $video->videoItems()->create($validated);
-        });
-
-        return redirect()->route('video_item.index', $video)
-            ->with('success', 'Video Item created successfully!');
+        $nextSequence = videoItem::where('video_id', $validated['video_id'])
+            ->max('sequence');
+        $validated['sequence'] = ($nextSequence ?? 0) + 1;
+        $videoItem             = videoItem::create($validated);
+        return $this->showVideoItems($validated['video_id']);
     }
 
-    // public function edit(Video $video, videoItem $video_item)
-    // {
-    //     if ($video_item->video_id !== $video->id) {
-    //         return redirect()->route('video_item.index', $video)
-    //             ->with('error', 'Video item does not belong to the specified video.');
-    //     }
+    public function edit($id)
+    {
+        $videoItems = videoItem::where('id', $id)->first();
+        $video      = Video::where('id', $videoItems->video_id)->first();
+        return Inertia::render('video-admin/videos/VideoItemEdit', [
+            'video_item' => $videoItems,
+            'video'      => $video->only('id', 'title'),
+        ]);
 
-    //     return Inertia::render('video-admin/videos/VideoItemEdit', [
-    //         'video'      => $video->only('id', 'title'),
-    //         'video_item' => $video_item,
-    //     ]);
-    // }
+    }
 
     // public function update(Request $request, Video $video, videoItem $video_item)
     // {

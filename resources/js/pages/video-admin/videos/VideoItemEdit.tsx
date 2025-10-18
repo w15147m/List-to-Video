@@ -23,7 +23,7 @@ export default function VideoItemEdit({ video, video_item }: VideoItemEditProps)
     const breadcrumbs: BreadcrumbItem[] = [
         { title: 'Video Admin', href: '/video-admin' },
   ];
-
+ 
     const pageInfo = {
         title: `Edit Item #${video_item.sequence} for: ${video.title}`,
         btnText: null,

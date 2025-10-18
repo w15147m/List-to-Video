@@ -6,11 +6,17 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 declare function route(name: string, parameters?: any): string;
 
+interface VideoItemFormProps {
+    videoItem?: VideoItem;
+    videoId: number;
+    submitRoute: string;
+}
 interface VideoItemFormData {
     heading: string;
     subheading: string;
     main_value: string;
     media_url: string;
+    video_id: number;
 }
 
 interface VideoItem {
@@ -23,11 +29,7 @@ interface VideoItem {
     media_url: string | null;
 }
 
-interface VideoItemFormProps {
-    videoItem?: VideoItem;
-    videoId: number;
-    submitRoute: string;
-}
+
 
 export default function VideoItemForm({ videoItem, videoId, submitRoute }: VideoItemFormProps) {
     const isEditing = !!videoItem;
@@ -36,20 +38,24 @@ export default function VideoItemForm({ videoItem, videoId, submitRoute }: Video
         subheading: videoItem?.subheading ?? '',
         main_value: videoItem?.main_value ?? '',
         media_url: videoItem?.media_url ?? '',
+        video_id: videoId,
     });
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        const routeParams = {
-            video: videoId,
-            ...(isEditing ? { video_item: videoItem.id } : {})
+
+         const routeParams = isEditing ? { video_item: videoItem.id } : {};
+
+        const submitData = {
+            ...data,
+            video_id: videoId,
         };
 
         if (isEditing) {
-            put(route(submitRoute, routeParams));
+            put(route(submitRoute, routeParams), { data: submitData });
         } else {
-            post(route(submitRoute, routeParams));
+            post(route(submitRoute), { data: submitData });
         }
     };
 
