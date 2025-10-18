@@ -79,7 +79,9 @@ const ImageGalleryInput: React.FC<ImageGalleryInputProps> = ({
         onGalleryChange(filteredImages);
     };
     const disableUpload = isSingle && galleryImages.length >= 1;
-
+  console.log('====================================');
+  console.log(galleryImages);
+  console.log('====================================');
     return (
         <div className="mb-6">
             <label className="mb-2 block text-sm font-medium text-gray-700">
@@ -134,6 +136,7 @@ const ImageGalleryInput: React.FC<ImageGalleryInputProps> = ({
                 )}
 
                 {galleryImages.map((image) => (
+
                     <div
                         key={image.id}
                         className="relative h-48 w-44 overflow-hidden rounded-lg border border-gray-200 shadow-md"

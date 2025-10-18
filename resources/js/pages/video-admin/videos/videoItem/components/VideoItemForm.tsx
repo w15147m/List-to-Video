@@ -116,7 +116,7 @@ export default function VideoItemForm({
                     <Label>Upload Media (Image)</Label>
                     <ImageGalleryInput
                         initialGalleryImages={
-                            data.media_url ? [data.media_url] : []
+                        data.media_url ? [data] : []
                         }
                         onGalleryChange={(images) => {
                             if (images.length > 0) {

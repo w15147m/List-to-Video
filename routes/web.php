@@ -22,10 +22,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('video-admin/Playlist/PlaylistPage');
     })->name('playlist');
     Route::resources([
-        'playlist'  => PlaylistController::class,
-        'video'     => VideoController::class,
-        'videoItem' => VideoItemController::class,
-     'temp-image' => TempImageController::class,
+        'playlist'   => PlaylistController::class,
+        'video'      => VideoController::class,
+        'videoItem'  => VideoItemController::class,
+        'temp-image' => TempImageController::class,
 
     ]);
 });
