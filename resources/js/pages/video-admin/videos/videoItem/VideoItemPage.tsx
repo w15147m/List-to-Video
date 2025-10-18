@@ -29,6 +29,9 @@ export default function VideoItemPage({
     video,
     video_items,
 }: VideoItemPageProps) {
+    console.log('====================================');
+    console.log(video_items);
+    console.log('====================================');
     const pageInfo = {
         title: `Items for: ${video.title}`,
         btnText: 'New Item',

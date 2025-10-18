@@ -4,7 +4,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import ImageGalleryInput from '@/pages/video-admin/components/ImageGalleryInput';
 import { Link, useForm } from '@inertiajs/react';
-import { FormEventHandler, useState } from 'react';
+import { FormEventHandler } from 'react';
 declare function route(name: string, parameters?: any): string;
 
 interface VideoItemFormProps {
@@ -37,17 +37,17 @@ export default function VideoItemForm({
     submitRoute,
 }: VideoItemFormProps) {
     const isEditing = !!videoItem;
-    const { data, setData, post, put, processing, errors } =
-        useForm<VideoItemFormData  & { gallery: any }>({
-            heading: videoItem?.heading ?? '',
-            subheading: videoItem?.subheading ?? '',
-            main_value: videoItem?.main_value ?? '',
-            media_url: videoItem?.media_url ?? '',
-            video_id: videoId,
-              gallery: {}, // ✅ add gallery field
-        });
-
-
+    const { data, setData, post, put, processing, errors } = useForm<
+        VideoItemFormData & { gallery: any }
+    >({
+        heading: videoItem?.heading ?? '',
+        subheading: videoItem?.subheading ?? '',
+        main_value: videoItem?.main_value ?? '',
+        media_url: videoItem?.media_url ?? '',
+        image_url: videoItem?.image_url ?? '',
+        video_id: videoId,
+        gallery: {}, // ✅ add gallery field
+    });
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
@@ -79,7 +79,7 @@ export default function VideoItemForm({
                                         ? [
                                               {
                                                   id: 1,
-                                                  image_url: data.media_url,
+                                                  image_url: data.image_url,
                                                   name: 'Selected',
                                               },
                                           ]

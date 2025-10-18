@@ -51,8 +51,43 @@ class VideoItemController extends Controller
         ]);
     }
 
+/**
+ * Store new video item
+ */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'heading'    => 'nullable|string|max:255',
+            'subheading' => 'nullable|string|max:255',
+            'main_value' => 'required|string|max:1000',
+            'media_url'  => 'nullable|url|max:255',
+            'video_id'   => 'required',
+        ]);
+
+        // Handle sequence number
+        $nextSequence          = VideoItem::where('video_id', $validated['video_id'])->max('sequence');
+        $validated['sequence'] = ($nextSequence ?? 0) + 1;
+
+        $videoItem = VideoItem::create($validated);
+
+        // If gallery image uploaded
+        if ($request->gallery) {
+            $imageName = $this->createImage($request->gallery);
+            $videoItem->update(['media_url' => $imageName]);
+        }
+
+        return $this->showVideoItems($validated['video_id']);
+    }
+
+    /**
+     * Update existing video item
+     */
+    public function update(Request $request, $id)
+    {
+        $video_item = VideoItem::findOrFail($id);
+
+        // Store the old image name before updating anything
+        $oldImage = $video_item->media_url;
 
         $validated = $request->validate([
             'heading'    => 'nullable|string|max:255',
@@ -60,32 +95,23 @@ class VideoItemController extends Controller
             'main_value' => 'required|string|max:1000',
             'media_url'  => 'nullable|url|max:255',
             'video_id'   => 'required',
-
         ]);
-        $nextSequence = VideoItem::where('video_id', $validated['video_id'])
-            ->max('sequence');
-        $validated['sequence'] = ($nextSequence ?? 0) + 1;
-        VideoItem::create($validated);
+
+        // Update textual fields
+        $video_item->update($validated);
+
         if ($request->gallery) {
-            $tempImage = $request->gallery;
-            //    Large thumbnail
-            $imageName = 'video_item_' . time() . '_' . $tempImage['name'];
-            $manager = new ImageManager(new Driver());
-            $img     = $manager->read(public_path('uploads/temp/' . $tempImage['name']));
-            $img->scaleDown(1920);
-            $img->save(public_path('uploads/youtube/large/' . $imageName));
+            // Delete the previous image using the stored name
+            $this->deleteImage($oldImage);
 
-            //    Small thumbnail
-            $manager = new ImageManager(new Driver());
-            $img     = $manager->read(public_path('uploads/temp/' . $tempImage['name']));
-            $img->coverDown(400, 460);
-            $img->save(public_path('uploads/youtube/small/' . $imageName));
-            info($imageName);
-
+            // Create and assign new one
+            $imageName = $this->createImage($request->gallery);
+            $video_item->update(['media_url' => $imageName]);
         }
 
         return $this->showVideoItems($validated['video_id']);
     }
+
     public function edit($id)
     {
 
@@ -98,25 +124,6 @@ class VideoItemController extends Controller
 
     }
 
-    public function update(Request $request, $id)
-    {
-
-        $video_item = VideoItem::where('id', $id)->first();
-
-        $validated = $request->validate([
-            'heading'    => 'nullable|string|max:255',
-            'subheading' => 'nullable|string|max:255',
-            'main_value' => 'required|string|max:1000',
-            'media_url'  => 'nullable|url|max:255',
-            'video_id'   => 'required',
-        ]);
-        $video_item->update($validated);
-        info($video_item);
-
-        return $this->showVideoItems($validated['video_id']);
-
-    }
-
     // /**
     //  * Remove the specified resource from storage.
     //  * Route: /video/{video}/items/{video_item} (video_item.destroy)
@@ -124,9 +131,55 @@ class VideoItemController extends Controller
     public function destroy($id)
     {
         $videoItem = VideoItem::findOrFail($id);
-        $videoId   = $videoItem->video_id;
+        $this->deleteImage($videoItem->media_url);
+        $videoId = $videoItem->video_id;
         $videoItem->delete();
         return $this->showVideoItems($videoId);
+    }
 
+    /**
+     * Helper: Create and store image in large/small folders
+     */
+    private function createImage($tempImage)
+    {
+        $imageName = 'video_item_' . time() . '_' . $tempImage['name'];
+        $manager   = new ImageManager(new Driver());
+
+        $tempPath  = public_path('uploads/temp/' . $tempImage['name']);
+        $largePath = public_path('uploads/youtube/large/' . $imageName);
+        $smallPath = public_path('uploads/youtube/small/' . $imageName);
+
+        // Large thumbnail
+        $img = $manager->read($tempPath);
+        $img->scaleDown(1920);
+        $img->save($largePath);
+
+        // Small thumbnail
+        $img = $manager->read($tempPath);
+        $img->coverDown(400, 460);
+        $img->save($smallPath);
+
+        return $imageName;
+    }
+
+    /**
+     * Helper: Delete both large & small images if they exist
+     */
+    private function deleteImage($fileName)
+    {
+        if (! $fileName) {
+            return;
+        }
+
+        $paths = [
+            public_path('uploads/youtube/large/' . $fileName),
+            public_path('uploads/youtube/small/' . $fileName),
+        ];
+
+        foreach ($paths as $path) {
+            if (file_exists($path)) {
+                unlink($path);
+            }
+        }
     }
 }

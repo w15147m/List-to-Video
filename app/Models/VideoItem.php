@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,6 +18,14 @@ class VideoItem extends Model
         'detail_text',
         'media_url',
     ];
+    protected $appends = ['image_url'];
+    public function getImageUrlAttribute()
+    {
+        if ($this->media_url == "") {
+            return "";
+        }
+        return asset('/uploads/youtube/small/' . $this->media_url);
+    }
 
     /**
      * The attributes that should be cast.
