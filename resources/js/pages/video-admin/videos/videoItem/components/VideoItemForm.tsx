@@ -4,7 +4,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import ImageGalleryInput from '@/pages/video-admin/components/ImageGalleryInput';
 import { Link, useForm } from '@inertiajs/react';
-import { FormEventHandler } from 'react';
+import { FormEventHandler, useState } from 'react';
 declare function route(name: string, parameters?: any): string;
 
 interface VideoItemFormProps {
@@ -37,23 +37,17 @@ export default function VideoItemForm({
     submitRoute,
 }: VideoItemFormProps) {
     const isEditing = !!videoItem;
-    const { data, setData, post, put, processing, errors } = useForm<
-        VideoItemFormData & { image_id: any; image_name: any }
-    >({
-        heading: videoItem?.heading ?? '',
-        subheading: videoItem?.subheading ?? '',
-        main_value: videoItem?.main_value ?? '',
-        media_url: videoItem?.media_url ?? '',
-        video_id: videoId,
-        image_id: null, // ✅ add gallery field
-        image_name: null,
-    });
+    const { data, setData, post, put, processing, errors } =
+        useForm<VideoItemFormData  & { gallery: any }>({
+            heading: videoItem?.heading ?? '',
+            subheading: videoItem?.subheading ?? '',
+            main_value: videoItem?.main_value ?? '',
+            media_url: videoItem?.media_url ?? '',
+            video_id: videoId,
+              gallery: {}, // ✅ add gallery field
+        });
 
-    //    const [galleryData, setGalleryData] = useState<{
-    //         id: number;
-    //         image_url: string;
-    //         name: string;
-    //     }>();
+
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
@@ -79,7 +73,6 @@ export default function VideoItemForm({
                     <div className="">
                         <div className="w-full max-w-[220px]">
                             <Label htmlFor="heading">Heading (Optional)</Label>
-
                             <ImageGalleryInput
                                 initialGalleryImages={
                                     data.media_url
@@ -94,13 +87,11 @@ export default function VideoItemForm({
                                 }
                                 onGalleryChange={(images) => {
                                     if (images.length > 0) {
-                                        const selected = images[0];
-                                        setData({
-                                            ...data,
-                                            image_id: selected.id,
-                                            image_name: selected.name,
-                                            media_url: selected.image_url,
-                                        });
+                                        setData('gallery', images[0]);
+                                        setData(
+                                            'media_url',
+                                            images[0].image_url,
+                                        );
                                     } else {
                                         setData('media_url', '');
                                     }

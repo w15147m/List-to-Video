@@ -5,6 +5,8 @@ use App\Models\Video;
 use App\Models\VideoItem;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\ImageManager;
 
 class VideoItemController extends Controller
 {
@@ -52,7 +54,6 @@ class VideoItemController extends Controller
     public function store(Request $request)
     {
 
-         info($request->all());
         $validated = $request->validate([
             'heading'    => 'nullable|string|max:255',
             'subheading' => 'nullable|string|max:255',
@@ -65,7 +66,25 @@ class VideoItemController extends Controller
             ->max('sequence');
         $validated['sequence'] = ($nextSequence ?? 0) + 1;
         VideoItem::create($validated);
-        // return $this->showVideoItems($validated['video_id']);
+        if ($request->gallery) {
+            $tempImage = $request->gallery;
+            //    Large thumbnail
+            $imageName = 'video_item_' . time() . '_' . $tempImage['name'];
+            $manager = new ImageManager(new Driver());
+            $img     = $manager->read(public_path('uploads/temp/' . $tempImage['name']));
+            $img->scaleDown(1920);
+            $img->save(public_path('uploads/youtube/large/' . $imageName));
+
+            //    Small thumbnail
+            $manager = new ImageManager(new Driver());
+            $img     = $manager->read(public_path('uploads/temp/' . $tempImage['name']));
+            $img->coverDown(400, 460);
+            $img->save(public_path('uploads/youtube/small/' . $imageName));
+            info($imageName);
+
+        }
+
+        return $this->showVideoItems($validated['video_id']);
     }
     public function edit($id)
     {
@@ -91,7 +110,7 @@ class VideoItemController extends Controller
             'media_url'  => 'nullable|url|max:255',
             'video_id'   => 'required',
         ]);
-         $video_item->update($validated);
+        $video_item->update($validated);
         info($video_item);
 
         return $this->showVideoItems($validated['video_id']);
