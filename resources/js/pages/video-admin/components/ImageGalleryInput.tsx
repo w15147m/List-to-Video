@@ -79,15 +79,8 @@ const ImageGalleryInput: React.FC<ImageGalleryInputProps> = ({
         onGalleryChange(filteredImages);
     };
     const disableUpload = isSingle && galleryImages.length >= 1;
-  console.log('====================================');
-  console.log(galleryImages);
-  console.log('====================================');
-    return (
+   return (
         <div className="mb-6">
-            <label className="mb-2 block text-sm font-medium text-gray-700">
-                {isSingle ? 'Single Image' : 'Image Gallery'}
-            </label>
-
             <div className="flex w-full flex-wrap gap-4">
                 {!disableUpload && (
                     <div className="h-48 w-44">
