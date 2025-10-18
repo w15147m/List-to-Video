@@ -12,12 +12,12 @@ interface ImageGalleryInputProps {
     initialGalleryImages?: ImageData[];
     onGalleryChange: (images: ImageData[]) => void;
     isEditing?: boolean;
-    isSingle?: boolean; // ✅ single or multiple mode
+    isSingle?: boolean;
 }
 const ImageGalleryInput: React.FC<ImageGalleryInputProps> = ({
     initialGalleryImages = [],
     onGalleryChange,
-    isSingle = false, // default = multiple
+    isSingle = false,
 }) => {
     const [isLoader, setLoader] = useState(false);
     const [galleryImages, setGalleryImages] =
@@ -78,8 +78,6 @@ const ImageGalleryInput: React.FC<ImageGalleryInputProps> = ({
         setGalleryImages(filteredImages);
         onGalleryChange(filteredImages);
     };
-
-    // ✅ Disable upload if single image mode and already one uploaded
     const disableUpload = isSingle && galleryImages.length >= 1;
 
     return (
@@ -89,7 +87,6 @@ const ImageGalleryInput: React.FC<ImageGalleryInputProps> = ({
             </label>
 
             <div className="flex w-full flex-wrap gap-4">
-                {/* Upload Input */}
                 {!disableUpload && (
                     <div className="h-48 w-44">
                         <label
@@ -136,7 +133,6 @@ const ImageGalleryInput: React.FC<ImageGalleryInputProps> = ({
                     </div>
                 )}
 
-                {/* Uploaded Images */}
                 {galleryImages.map((image) => (
                     <div
                         key={image.id}
