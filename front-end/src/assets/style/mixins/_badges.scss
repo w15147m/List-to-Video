@@ -1,0 +1,6 @@
+@mixin badge-inverse-variant($color, $color-hover: $white) {
+    background-color: rgba($color, 0.2);
+    background-image: none;
+    border-color: rgba($color, 0);
+    color: $color !important;
+  }

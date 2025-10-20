@@ -1,0 +1,26 @@
+// =================================================================
+// MAIN SCSS FILE (Bootstrap-free)
+// =================================================================
+// This is the main entry point that imports all utility modules
+// Import order is important for dependencies
+
+@import 'style.scss';
+// =================================================================
+// 1. CONFIGURATION & SETUP
+// =================================================================
+@import 'variables';        // All variables and maps
+
+// =================================================================
+// 2. UTILITY MODULES
+// =================================================================
+@import 'mixins/appearance';  
+@import 'mixins/_badges.scss';        
+@import 'mixins/_buttons.scss';        
+@import 'mixins/_cursor.scss';        
+@import 'mixins/_layout.scss';        
+@import 'mixins/_misc.scss';        
+@import 'mixins/_general.scss';        
+@import 'mixins/_width.scss';        
+@import 'mixins/animation';            // Flexbox utilities
+
+

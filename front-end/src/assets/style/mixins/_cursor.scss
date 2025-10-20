@@ -1,0 +1,37 @@
+$cursors: (
+  pointer,
+  grab,
+  grabbing,
+  default,
+  not-allowed,
+  text,
+  move,
+  help,
+  wait,
+  crosshair,
+  none,
+  alias,
+  copy,
+  no-drop,
+  all-scroll,
+  col-resize,
+  row-resize,
+  n-resize,
+  e-resize,
+  s-resize,
+  w-resize,
+  ne-resize,
+  nw-resize,
+  se-resize,
+  sw-resize,
+  ew-resize,
+  ns-resize,
+  nesw-resize 
+);
+
+
+@each $cursor in $cursors {
+  .cursor-#{$cursor} {
+    cursor: #{$cursor} !important;
+  }
+}
