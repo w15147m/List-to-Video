@@ -12,54 +12,6 @@ class VideoController extends Controller
 {
 
 
-public function generate(Video $video)
-{
-    if ($video->status === 'processing') {
-        return back()->with('error', 'Video is already being processed.');
-    }
-
-    $video->update(['status' => 'processing']);
-    GenerateVideoJob::dispatch($video);
-
-    return redirect()->route('video.index')
-        ->with('success', "Video '{$video->title}' generation started! Status: PROCESSING");
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -15,6 +15,7 @@ function Home() {
           <LatestProducts />
         </section>
         <section className="section-2 py-5">
+          <FeaturedProducts />
         </section>
       </div>
     </CommonLayout>
