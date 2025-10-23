@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios"; // in ImageGalleryInput.tsx
 import { Trash2, Upload } from 'lucide-react';
 import React, { useState } from 'react';
 
