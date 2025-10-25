@@ -8,6 +8,4 @@ declare module "react-router" {
 
 type Params = {
   "/": {};
-  "/api/lambda/progress": {};
-  "/api/lambda/render": {};
 };
