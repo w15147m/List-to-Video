@@ -92,6 +92,8 @@ export const put = (url, data) => {
 
 export const del = (url) => {
   return api.delete(url).then(extractData);
+
+  
 };
 
 const loginApi = axios.create({
