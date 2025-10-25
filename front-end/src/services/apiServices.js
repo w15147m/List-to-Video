@@ -20,7 +20,7 @@ api.interceptors.request.use((config) => {
   const token = authInfo?.token;
 
   if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+    config.headers.Authorization = `Bearer ${token}`; // ✅ This is where the token is set
   }
   return config;
 });

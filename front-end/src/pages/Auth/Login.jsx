@@ -25,8 +25,6 @@ const Login = () => {
       toast.error(error.message);
     }
 
-
-
   }
 
   return (

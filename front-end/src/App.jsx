@@ -7,6 +7,7 @@ import Login from "./pages/Auth/Login";
 import Dashboard from "./pages/admin/Dashboard";
 
 import Test from "./pages/Test";
+import PlaylistTable from "./pages/admin/PlaylistTable";
 
 function App() {
   return (
@@ -25,6 +26,8 @@ function App() {
         />
         <Route path="/admin" element={<ProtectedAdminRoutes />}>
           <Route path="dashboard" element={<Dashboard />} />
+          <Route path="playlist" element={<PlaylistTable />} />
+
         </Route>
       </Routes>
     </BrowserRouter>
